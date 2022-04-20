@@ -1,0 +1,24 @@
+,acc,optim,config
+0,0.44702,sgd,"{'lr': 0.01, 'momentum': 0, 'weight_decay': 0.001}"
+1,0.43932,sgd,"{'lr': 0.01, 'momentum': 0, 'weight_decay': 0.0001}"
+2,0.45524,sgd,"{'lr': 0.01, 'momentum': 0, 'weight_decay': 1e-05}"
+3,0.64446,sgd,"{'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.001}"
+4,0.60758,sgd,"{'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001}"
+5,0.607,sgd,"{'lr': 0.01, 'momentum': 0.9, 'weight_decay': 1e-05}"
+6,0.2494,sgd,"{'lr': 0.001, 'momentum': 0, 'weight_decay': 0.001}"
+7,0.24266,sgd,"{'lr': 0.001, 'momentum': 0, 'weight_decay': 0.0001}"
+8,0.24662,sgd,"{'lr': 0.001, 'momentum': 0, 'weight_decay': 1e-05}"
+9,0.4704,sgd,"{'lr': 0.001, 'momentum': 0.9, 'weight_decay': 0.001}"
+10,0.46598,sgd,"{'lr': 0.001, 'momentum': 0.9, 'weight_decay': 0.0001}"
+11,0.46256,sgd,"{'lr': 0.001, 'momentum': 0.9, 'weight_decay': 1e-05}"
+12,0.44504,sgd,{'lr': 0.01}
+13,0.23556,sgd,{'lr': 0.001}
+14,0.63124,adam,"{'lr': 0.01, 'weight_decay': 0.001}"
+15,0.69518,adam,"{'lr': 0.01, 'weight_decay': 0.0001}"
+16,0.7078,adam,"{'lr': 0.01, 'weight_decay': 1e-05}"
+17,0.75332,adam,"{'lr': 0.001, 'weight_decay': 0.001}"
+18,0.76726,adam,"{'lr': 0.001, 'weight_decay': 0.0001}"
+19,0.68516,adam,"{'lr': 0.001, 'weight_decay': 1e-05}"
+20,0.44504,sgd,{'lr': 0.01}
+21,0.23556,sgd,{'lr': 0.001}
+22,0.45336,sgd,"{'lr': 0.01, 'weight_decay': 0.0001}"
