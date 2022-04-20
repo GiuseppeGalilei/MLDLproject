@@ -1,0 +1,21 @@
+,acc,sched,config
+0,0.77554,1clr,"{'cycle_momentum': False, 'div_factor': 5, 'final_div_factor': 5, 'max_lr': 0.005, 'pct_start': 0.3, 'total_steps': 25}"
+1,0.7919,1clr,"{'cycle_momentum': False, 'div_factor': 5, 'final_div_factor': 10, 'max_lr': 0.005, 'pct_start': 0.3, 'total_steps': 25}"
+2,0.77834,1clr,"{'cycle_momentum': False, 'div_factor': 10, 'final_div_factor': 5, 'max_lr': 0.005, 'pct_start': 0.3, 'total_steps': 25}"
+3,0.79138,1clr,"{'cycle_momentum': False, 'div_factor': 10, 'final_div_factor': 10, 'max_lr': 0.005, 'pct_start': 0.3, 'total_steps': 25}"
+4,0.81398,1clr,"{'cycle_momentum': False, 'div_factor': 5, 'final_div_factor': 5, 'max_lr': 0.01, 'pct_start': 0.3, 'total_steps': 25}"
+5,0.80906,1clr,"{'cycle_momentum': False, 'div_factor': 5, 'final_div_factor': 10, 'max_lr': 0.01, 'pct_start': 0.3, 'total_steps': 25}"
+6,0.80684,1clr,"{'cycle_momentum': False, 'div_factor': 10, 'final_div_factor': 5, 'max_lr': 0.01, 'pct_start': 0.3, 'total_steps': 25}"
+7,0.8124,1clr,"{'cycle_momentum': False, 'div_factor': 10, 'final_div_factor': 10, 'max_lr': 0.01, 'pct_start': 0.3, 'total_steps': 25}"
+8,0.70018,exp,{'gamma': 1.1}
+9,0.73426,exp,{'gamma': 1.05}
+10,0.75066,1clr,"{'cycle_momentum': False, 'div_factor': 5, 'final_div_factor': 5, 'max_lr': 0.01, 'pct_start': 0.2, 'total_steps': 25}"
+11,0.81582,1clr,"{'cycle_momentum': False, 'div_factor': 5, 'final_div_factor': 10, 'max_lr': 0.01, 'pct_start': 0.2, 'total_steps': 25}"
+12,0.80406,1clr,"{'cycle_momentum': False, 'div_factor': 10, 'final_div_factor': 5, 'max_lr': 0.01, 'pct_start': 0.2, 'total_steps': 25}"
+13,0.78636,1clr,"{'cycle_momentum': False, 'div_factor': 10, 'final_div_factor': 10, 'max_lr': 0.01, 'pct_start': 0.2, 'total_steps': 25}"
+14,0.76086,exp,{'gamma': 0.95}
+15,0.79332,1clr,"{'cycle_momentum': False, 'div_factor': 5, 'final_div_factor': 5, 'max_lr': 0.005, 'pct_start': 0.2, 'total_steps': 25}"
+16,0.80776,1clr,"{'cycle_momentum': False, 'div_factor': 5, 'final_div_factor': 10, 'max_lr': 0.005, 'pct_start': 0.2, 'total_steps': 25}"
+17,0.79854,1clr,"{'cycle_momentum': False, 'div_factor': 10, 'final_div_factor': 5, 'max_lr': 0.005, 'pct_start': 0.2, 'total_steps': 25}"
+18,0.79416,1clr,"{'cycle_momentum': False, 'div_factor': 10, 'final_div_factor': 10, 'max_lr': 0.005, 'pct_start': 0.2, 'total_steps': 25}"
+19,0.72618,exp,{'gamma': 0.9}
