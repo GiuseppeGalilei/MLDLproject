@@ -1,0 +1,5 @@
+acc,optim,clip_value
+0.76678,sgd,0.1
+0.76462,sgd,0.01
+0.82134,adam,0.1
+0.75268,adam,0.01
