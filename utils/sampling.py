@@ -10,6 +10,7 @@ def cifar_iid(dataset, num_users):
         all_idxs = list(set(all_idxs) - dict_users[i])
     return dict_users
 
+
 def cifar_noniid(dataset, num_users):
     num_shards, num_imgs = 200, 250
     idx_shard = [i for i in range(num_shards)]
@@ -27,6 +28,7 @@ def cifar_noniid(dataset, num_users):
         for rand in rand_set:
             dict_users[i] = np.concatenate((dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
     return dict_users
+
 
 def cifar_noniid_unbalanced(dataset, num_users):
     num_shards, num_imgs = 1000, 50
