@@ -1,9 +1,10 @@
+# %% [code]
 import torch
 from torch import nn, optim
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
-from .fedgkt_utils import *
-from .reproducibility import seed_worker
+import fedgkt_utils
+from reproducibility import seed_worker
 
 g=torch.Generator()
 seed = 0
@@ -40,7 +41,7 @@ class GKTServerTrainer(object):
         self.scheduler = ReduceLROnPlateau(self.optimizer, 'max')
 
         self.criterion_CE = nn.CrossEntropyLoss()
-        self.criterion_KL = KL_Loss(self.args['temperature'])
+        self.criterion_KL = fedgkt_utils.KL_Loss(self.args['temperature'])
         self.best_acc = 0.0
 
         # key: client_index; value: extracted_feature_dict
@@ -70,7 +71,25 @@ class GKTServerTrainer(object):
         self.client_labels_dict[index] = labels_dict
         self.client_extracted_feauture_dict_test[index] = extracted_feature_dict_test
         self.client_labels_dict_test[index] = labels_dict_test
+        
+        print(len(self.client_extracted_feauture_dict_test))
 
+    def remove_records(self):
+        for idx in self.client_extracted_feauture_dict.keys():
+            self.client_extracted_feauture_dict[idx].clear()
+            self.client_logits_dict[idx].clear()
+            self.client_labels_dict[idx].clear()
+            self.server_logits_dict[idx].clear()
+        for id in self.client_extracted_feauture_dict_test.keys():
+            self.client_extracted_feauture_dict_test[idx].clear()
+            self.client_labels_dict_test[idx].clear()
+        self.client_extracted_feauture_dict.clear()
+        self.client_logits_dict.clear()
+        self.client_labels_dict.clear()
+        self.server_logits_dict.clear()
+        self.client_extracted_feauture_dict_test.clear()
+        self.client_labels_dict_test.clear()
+        
 
     def get_global_logits(self, client_index):
         return self.server_logits_dict[client_index]
@@ -86,13 +105,13 @@ class GKTServerTrainer(object):
             self.train_metrics_list.append(train_metrics)
 
             if epoch == epochs - 1:
-                print({"train/loss": train_metrics['train_loss'],"train/accuracy": train_metrics['train_acc'], "epoch": round_idx + 1})
+                print({"train/loss": train_metrics['train_loss'],"train/accuracy": train_metrics['train_acc'], "round": round_idx + 1})
 
                 # Evaluate for one epoch on validation set
                 test_metrics = self.eval_large_model_on_the_server(round_idx)
                 self.test_metrics_list.append(test_metrics)
 
-                print({"test/loss": test_metrics['test_loss'],"test/accuracy": test_metrics['test_acc'], "epoch": round_idx + 1})
+                print({"test/loss": test_metrics['test_loss'],"test/accuracy": test_metrics['test_acc'], "round": round_idx + 1})
 
     def train_large_model_on_the_server(self, round_idx, epoch):
         # clear the server side logits
@@ -102,8 +121,8 @@ class GKTServerTrainer(object):
 
         self.model_global.train()
 
-        loss_avg = RunningAverage()
-        accTop1_avg = RunningAverage()
+        loss_avg = fedgkt_utils.RunningAverage()
+        accTop1_avg = fedgkt_utils.RunningAverage()
 
         for client_index in self.client_extracted_feauture_dict.keys():
             extracted_feature_dict = self.client_extracted_feauture_dict[client_index]
@@ -128,7 +147,7 @@ class GKTServerTrainer(object):
                 self.optimizer.step()
 
                 # Update average loss and accuracy
-                metrics = accuracy(output_batch, batch_labels, topk=(1,))
+                metrics = fedgkt_utils.accuracy(output_batch, batch_labels, topk=(1,))
                 accTop1_avg.update(metrics[0].item())
                 loss_avg.update(loss.item())
 
@@ -150,8 +169,8 @@ class GKTServerTrainer(object):
 
         # set model to evaluation mode
         self.model_global.eval()
-        loss_avg = RunningAverage()
-        accTop1_avg = RunningAverage()
+        loss_avg = fedgkt_utils.RunningAverage()
+        accTop1_avg = fedgkt_utils.RunningAverage()
         with torch.no_grad():
             for client_index in self.client_extracted_feauture_dict_test.keys():
                 extracted_feature_dict = self.client_extracted_feauture_dict_test[client_index]
@@ -165,7 +184,7 @@ class GKTServerTrainer(object):
                     loss = self.criterion_CE(output_batch, batch_labels)
 
                     # Update average loss and accuracy
-                    metrics = accuracy(output_batch, batch_labels, topk=(1,))
+                    metrics = fedgkt_utils.accuracy(output_batch, batch_labels, topk=(1,))
                     # only one element tensors can be converted to Python scalars
                     accTop1_avg.update(metrics[0].item())
                     loss_avg.update(loss.item())
@@ -203,7 +222,7 @@ class GKTClientTrainer(object):
 
 
         self.criterion_CE = nn.CrossEntropyLoss()
-        self.criterion_KL = KL_Loss(self.args['temperature'])
+        self.criterion_KL = fedgkt_utils.KL_Loss(self.args['temperature'])
 
         self.server_logits_dict = dict()
 
