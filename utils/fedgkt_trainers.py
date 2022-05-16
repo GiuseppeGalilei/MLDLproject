@@ -1,4 +1,7 @@
-# %% [code]
+"""
+Based on the implementation in https://github.com/FedML-AI/FedML
+"""
+
 import torch
 from torch import nn, optim
 from torch.optim.lr_scheduler import ReduceLROnPlateau
