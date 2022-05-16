@@ -5,4 +5,4 @@ Goals:
 * implement a **federated baseline** (FedAvg)
 * simulate **system heterogeneity** (FedGKT)
 * simulate a **gradient inversion attack**
-* explore in more depth a topic among: statistical heterogeneity, system heterogeneity, privacy and security in a federated scenario
+* explore in more depth a topic among: statistical heterogeneity, system heterogeneity, and privacy and security in a federated scenario
