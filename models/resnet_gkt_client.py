@@ -3,7 +3,7 @@ ResNet with batch normalization layers.
 From 'Deep Residual Learning for Image Recognition' by Kaiming et al.
 
 This version has in the first convolutional layer a kernel size of 3 instead of 7 to deal better with CIFAR-10.
-We added the option to set the normalization layer type by passing an argument when calling ResNet50.
+We added the option to set the normalization layer type by passing an argument when calling ResNet8.
 """
 import torch
 import torch.nn as nn
