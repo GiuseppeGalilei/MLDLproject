@@ -1,3 +1,6 @@
+"""
+Based on the implementation in https://github.com/AshwinRJ/Federated-Learning-PyTorch
+"""
 import copy
 import torch
 from torchvision import datasets, transforms
