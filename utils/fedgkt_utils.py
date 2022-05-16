@@ -1,3 +1,7 @@
+"""
+Based on the implementation in https://github.com/FedML-AI/FedML
+"""
+
 import numpy as np
 import torch
 import torch.nn as nn
