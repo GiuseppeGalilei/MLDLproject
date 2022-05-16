@@ -1,3 +1,7 @@
+"""
+Based on the implementation in https://github.com/AshwinRJ/Federated-Learning-PyTorch
+"""
+
 import numpy as np
 from torchvision import datasets, transforms
 
