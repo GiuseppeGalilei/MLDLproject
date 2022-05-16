@@ -1,5 +1,5 @@
 # Understanding the Main Challenges of Federated Learning
-## Machine Learning and Deep Learning - DSE @ PoliTO a.a. 2021-2022
+## Machine Learning and Deep Learning - DSE @ PoliTO ay 2021-2022
 Goals:
 * implement a **centralized baseline** to define an upper bound
 * implement a **federated baseline** (FedAvg)
