@@ -310,8 +310,8 @@ if __name__ == "__main__":
     import torchvision.datasets as datasets
     import torchvision.transforms as transforms
     #
-    # d = dataPrep("MNIST", root_dir =Path("../Data/"))
-    # d.make(1, 10, dir_alpha=0.7, lognorm_std=0.3, show_plots=False)
+    d = dataPrep("MNIST", root_dir =Path("../Data/"))
+    d.make(1, 10, dir_alpha=0.7, lognorm_std=0.3, show_plots=False)
 
     f = FedDyn(model = MLP().cuda(),
                num_clients = 10,
