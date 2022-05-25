@@ -5,46 +5,30 @@ Based on the implementation in https://github.com/FedML-AI/FedML
 import torch
 from torch import nn, optim
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+from torch.utils.data import DataLoader
 
-import fedgkt_utils
-from reproducibility import seed_worker
+from ..utils.reproducibility import seed_worker, make_it_reproducible
+from ..utils.datasets import DatasetSplit
+from .utils import *
 
 g=torch.Generator()
-seed = 0
-g.manual_seed(seed)
-
-from torch.utils.data import DataLoader, Dataset
-
-
-class DatasetSplit(Dataset):
-    def __init__(self, dataset, idxs):
-        self.dataset = dataset
-        self.idxs = [int(i) for i in idxs]
-
-    def __len__(self):
-        return len(self.idxs)
-
-    def __getitem__(self, item):
-        image, label = self.dataset[self.idxs[item]]
-        return image, label
 
 class GKTServerTrainer(object):
-    def __init__(self, client_num, device, server_model, args):
+    def __init__(self, client_num, device, server_model, args, seed):
         self.client_num = client_num
         self.device = device
         self.args = args
 
-        # server model
         self.model_global = server_model
         self.model_global.to(self.device)
 
         self.model_global.train()
 
-        self.optimizer = torch.optim.SGD(self.model_global.parameters(), lr=1e-2, momentum=0.5,weight_decay=0)
+        self.optimizer = optim.SGD(self.model_global.parameters(), lr=1e-2, momentum=0.5,weight_decay=0)
         self.scheduler = ReduceLROnPlateau(self.optimizer, 'max')
 
         self.criterion_CE = nn.CrossEntropyLoss()
-        self.criterion_KL = fedgkt_utils.KL_Loss(self.args['temperature'])
+        self.criterion_KL = KL_Loss(self.args['temperature'])
         self.best_acc = 0.0
 
         # key: client_index; value: extracted_feature_dict
@@ -65,6 +49,9 @@ class GKTServerTrainer(object):
 
         self.train_metrics_list = []
         self.test_metrics_list = []
+
+        make_it_reproducible(seed)
+        g.manual_seed(seed)
 
     def add_local_trained_result(self, index, extracted_feature_dict, logits_dict, labels_dict,
                                  extracted_feature_dict_test, labels_dict_test):
@@ -110,22 +97,20 @@ class GKTServerTrainer(object):
             if epoch == epochs - 1:
                 print({"train/loss": train_metrics['train_loss'],"train/accuracy": train_metrics['train_acc'], "round": round_idx + 1})
 
-                # Evaluate for one epoch on validation set
                 test_metrics = self.eval_large_model_on_the_server(round_idx)
                 self.test_metrics_list.append(test_metrics)
 
                 print({"test/loss": test_metrics['test_loss'],"test/accuracy": test_metrics['test_acc'], "round": round_idx + 1})
 
     def train_large_model_on_the_server(self, round_idx, epoch):
-        # clear the server side logits
         for key in self.server_logits_dict.keys():
             self.server_logits_dict[key].clear()
         self.server_logits_dict.clear()
 
         self.model_global.train()
 
-        loss_avg = fedgkt_utils.RunningAverage()
-        accTop1_avg = fedgkt_utils.RunningAverage()
+        loss_avg = RunningAverage()
+        accTop1_avg = RunningAverage()
 
         for client_index in self.client_extracted_feauture_dict.keys():
             extracted_feature_dict = self.client_extracted_feauture_dict[client_index]
@@ -149,17 +134,12 @@ class GKTServerTrainer(object):
                 loss.backward()
                 self.optimizer.step()
 
-                # Update average loss and accuracy
-                metrics = fedgkt_utils.accuracy(output_batch, batch_labels, topk=(1,))
+                metrics = accuracy(output_batch, batch_labels, topk=(1,))
                 accTop1_avg.update(metrics[0].item())
                 loss_avg.update(loss.item())
 
-                # update the logits for each client
-                # Note that this must be running in the model.train() model,
-                # since the client will continue the iteration based on the server logits.
                 s_logits_dict[batch_index] = output_batch.cpu().detach().numpy()
 
-        # compute mean of all metrics in summary
         train_metrics = {
             "round": round_idx,
             "epoch": epoch,
@@ -169,11 +149,9 @@ class GKTServerTrainer(object):
         return train_metrics
 
     def eval_large_model_on_the_server(self, round_idx):
-
-        # set model to evaluation mode
         self.model_global.eval()
-        loss_avg = fedgkt_utils.RunningAverage()
-        accTop1_avg = fedgkt_utils.RunningAverage()
+        loss_avg = RunningAverage()
+        accTop1_avg = RunningAverage()
         with torch.no_grad():
             for client_index in self.client_extracted_feauture_dict_test.keys():
                 extracted_feature_dict = self.client_extracted_feauture_dict_test[client_index]
@@ -186,13 +164,10 @@ class GKTServerTrainer(object):
                     output_batch = self.model_global(batch_feature_map_x)
                     loss = self.criterion_CE(output_batch, batch_labels)
 
-                    # Update average loss and accuracy
-                    metrics = fedgkt_utils.accuracy(output_batch, batch_labels, topk=(1,))
-                    # only one element tensors can be converted to Python scalars
+                    metrics = accuracy(output_batch, batch_labels, topk=(1,))
                     accTop1_avg.update(metrics[0].item())
                     loss_avg.update(loss.item())
 
-        # compute mean of all metrics in summary
         test_metrics = {
             "round": round_idx,
             'test_loss': loss_avg.value(),
@@ -221,11 +196,11 @@ class GKTClientTrainer(object):
 
         self.client_model.to(self.device)
 
-        self.optimizer = torch.optim.SGD(self.client_model.parameters(), lr=1e-2, momentum=0.5,weight_decay=0)
+        self.optimizer = optim.SGD(self.client_model.parameters(), lr=1e-2, momentum=0.5,weight_decay=0)
 
 
         self.criterion_CE = nn.CrossEntropyLoss()
-        self.criterion_KL = fedgkt_utils.KL_Loss(self.args['temperature'])
+        self.criterion_KL = KL_Loss(self.args['temperature'])
 
         self.server_logits_dict = dict()
 
@@ -251,7 +226,6 @@ class GKTClientTrainer(object):
         labels_dict_test = dict()
 
         self.client_model.train()
-        # train and update
         epoch_loss = []
         for epoch in range(self.args['epochs_client']):
             batch_loss = []
@@ -293,7 +267,7 @@ class GKTClientTrainer(object):
             logits_dict[batch_idx] = log_probs
             labels_dict[batch_idx] = labels.cpu().detach().numpy()
 
-        testloader = torch.utils.data.DataLoader(self.local_test_data, batch_size = 128, shuffle=True, num_workers=2, worker_init_fn = seed_worker, generator=g)
+        testloader = DataLoader(self.local_test_data, batch_size = 128, shuffle=True, num_workers=2, worker_init_fn = seed_worker, generator=g)
         for batch_idx, data in enumerate(testloader):
             images, labels = data
             test_images, test_labels = images.to(self.device), labels.to(self.device)
