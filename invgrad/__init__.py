@@ -1,7 +1,7 @@
 """Library of routines."""
 
 from invgrad import nn
-from invgrad.nn import construct_model, MetaMonkey
+from invgrad.nn import MetaMonkey
 
 from invgrad.data import construct_dataloaders
 from invgrad import utils
