@@ -35,7 +35,7 @@ class Server:
         data = torch.load(self.data_dir / "test_data.pth")
         self.test_loader = DataLoader(data,
                                  batch_size=1000,
-                                 shuffle=True, num_workers=4)
+                                 shuffle=True, num_workers=2)
 
         # Metrics
         self.test_loss_log = []
@@ -149,7 +149,7 @@ class ClientNode:
         data = torch.load(self.data_dir / self.id / "data.pth")
         self.train_loader = DataLoader(data,
                                        batch_size=self.batch_size,
-                                       shuffle=True, num_workers=4,
+                                       shuffle=True, num_workers=2,
                                        multiprocessing_context=get_context('loky'))
         print(f"Client {self.id}: Gathered data.")
 
@@ -172,7 +172,7 @@ class ClientNode:
         pbar = tqdm(range(num_epochs), desc=f"Client {self.id} Training")
         for epoch in pbar:
             epoch_loss = 0.0
-            print("Epoca: "+epoch+" client: "+self.id)
+            print("Epoca: "+str(epoch)+" client: "+str(self.id))
             for data, labels in self.train_loader:
                 # print(labels)
                 self.optim.zero_grad()
