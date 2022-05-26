@@ -149,8 +149,9 @@ class ClientNode:
         data = torch.load(self.data_dir / self.id / "data.pth")
         self.train_loader = DataLoader(data,
                                        batch_size=self.batch_size,
-                                       shuffle=True, num_workers=2,
-                                       multiprocessing_context=get_context('loky'))
+                                       shuffle=True, num_workers=2
+                                       )
+        #,multiprocessing_context=get_context('loky')
         print(f"Client {self.id}: Gathered data.")
 
     def receiveMessage(self):
