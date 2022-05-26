@@ -7,9 +7,9 @@ from torch import nn, optim
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader
 
-from ..utils.reproducibility import seed_worker, make_it_reproducible
-from ..utils.datasets import DatasetSplit
-from .utils import *
+from utils.reproducibility import seed_worker, make_it_reproducible
+from utils.datasets import DatasetSplit
+from fedgkt.utils import *
 
 g=torch.Generator()
 
