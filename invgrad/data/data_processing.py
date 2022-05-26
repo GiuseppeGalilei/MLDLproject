@@ -7,10 +7,12 @@ import torchvision.transforms as transforms
 
 import os
 
-from ..consts import *
-
 from .loss import Classification
 
+PIN_MEMORY = True
+NON_BLOCKING = False
+BENCHMARK = True
+MULTITHREAD_DATAPROCESSING = 4
 
 def construct_dataloaders(dataset, defs, data_path='~/data', shuffle=True, normalize=True):
     """Return a dataloader with given dataset and augmentation, normalize data?."""
