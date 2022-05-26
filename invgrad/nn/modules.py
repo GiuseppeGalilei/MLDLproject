@@ -5,8 +5,7 @@ from collections import OrderedDict
 from functools import partial
 import warnings
 
-from ..consts import BENCHMARK
-torch.backends.cudnn.benchmark = BENCHMARK
+torch.backends.cudnn.benchmark = True
 
 DEBUG = False  # Emit warning messages when patching. Use this to bootstrap new architectures.
 
