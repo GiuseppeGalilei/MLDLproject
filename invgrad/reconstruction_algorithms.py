@@ -2,10 +2,10 @@
 
 import torch
 from collections import defaultdict, OrderedDict
-from inversefed.nn import MetaMonkey
-from .metrics import total_variation as TV
-from .metrics import InceptionScore
-from .medianfilt import MedianPool2d
+from invgrad.nn import MetaMonkey
+from invgrad.metrics import total_variation as TV
+from invgrad.metrics import InceptionScore
+from invgrad.medianfilt import MedianPool2d
 from copy import deepcopy
 
 import time
