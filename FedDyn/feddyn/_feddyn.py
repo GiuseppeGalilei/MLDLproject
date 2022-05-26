@@ -311,6 +311,7 @@ if __name__ == "__main__":
     import sys
     sys.path.append("..")
     from models import MLP, Net
+    from resnet import ResNet50
     from prepare_data import dataPrep
     import torchvision.datasets as datasets
     import torchvision.transforms as transforms
@@ -318,7 +319,7 @@ if __name__ == "__main__":
     d = dataPrep("CIFAR10", root_dir =Path("../Data/"))
     d.make(1, 10, dir_alpha=0.7, lognorm_std=0.3, show_plots=False)
 
-    f = FedDyn(model = MLP().cuda(),
+    f = FedDyn(model = ResNet50().cuda(),
                num_clients = 10,
                data_dir= Path("../Data/client_data"),
                batch_size = 128,
