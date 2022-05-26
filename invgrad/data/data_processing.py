@@ -6,6 +6,7 @@ import torchvision
 import torchvision.transforms as transforms
 
 import os
+from utils.datasets import *
 
 from .loss import Classification
 
