@@ -317,17 +317,17 @@ if __name__ == "__main__":
     import torchvision.transforms as transforms
     #
     d = dataPrep("CIFAR10", root_dir =Path("../Data/"))
-    d.make(1, 100, dir_alpha=0.7, lognorm_std=0.3, show_plots=False)
+    d.make(1, 10, dir_alpha=0.7, lognorm_std=0.3, show_plots=False)
 
     f = FedDyn(model = ResNet50().cuda(),
-               num_clients = 100,
+               num_clients = 10,
                data_dir= Path("../Data/client_data"),
                batch_size = 128,
                learning_rate = 0.1,
                alpha=0.01)
 
-    f.run(num_epochs=5,
-          num_rounds=10,
-          participation_level=0.1,
+    f.run(num_epochs=1,
+          num_rounds=3,
+          participation_level=0.3,
           exp_name=r"MNIST 50% Non-IID balanced")
 
