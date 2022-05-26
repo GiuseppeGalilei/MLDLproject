@@ -172,12 +172,15 @@ class ClientNode:
         pbar = tqdm(range(num_epochs), desc=f"Client {self.id} Training")
         for epoch in pbar:
             epoch_loss = 0.0
+            print("Epoca: "+epoch+" client: "+self.id)
             for data, labels in self.train_loader:
                 # print(labels)
                 self.optim.zero_grad()
+                print("predizione")
                 y = self.model(data.cuda())
                 # print(y.shape, labels.shape)
                 epoch_loss = {}
+                print("loss")
                 loss = self.criterion(y, labels.cuda())
                 epoch_loss['Task Loss'] = loss.item()
                 #=== Dynamic regularization === #
@@ -193,7 +196,7 @@ class ClientNode:
                 lin_penalty = torch.sum(curr_params * self.prev_grads)
                 loss -= lin_penalty
                 epoch_loss['Lin Penalty'] = lin_penalty.item()
-
+                print("linear penalty")
                 # Quadratic Penalty
                 quad_penalty = 0.0
                 for name, param in self.model.named_parameters():
@@ -202,6 +205,7 @@ class ClientNode:
                 loss += self.alpha/2.0 * quad_penalty
                 epoch_loss['Quad Penalty'] = quad_penalty.item()
                 loss.backward()
+                print("quad penalty")
 
                 # Update the previous gradients
                 self.prev_grads = None
@@ -210,11 +214,11 @@ class ClientNode:
                         self.prev_grads = param.grad.view(-1).clone()
                     else:
                         self.prev_grads = torch.cat((self.prev_grads, param.grad.view(-1).clone()), dim=0)
-
+                print("updated gradients")
                 self.optim.step()
             pbar.set_postfix(epoch_loss) #{"Loss":epoch_loss/len(self.train_loader)})
         self.model.eval()
-        # print(f"Client {self.id}: Training done.")
+        print(f"Client {self.id}: Training done.")
 
 class FedDyn:
     def __init__(self,
