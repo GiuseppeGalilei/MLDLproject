@@ -143,6 +143,7 @@ class FedDynClient():
 
                 mod_loss = loss - lin_penalty + quad_penalty
                 mod_loss.backward()
+                torch.nn.utils.clip_grad_norm_(parameters=self.model.parameters(), max_norm=10)
                 self.optim.step()
 
                 epoch_loss += loss.item()
