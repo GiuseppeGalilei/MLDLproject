@@ -149,9 +149,9 @@ class FedDynClient():
         cur_params = None
         for name, param in self.model.named_parameters():
             if not isinstance(cur_params, torch.Tensor):
-                cur_params = param.detach().view(-1) - server_state_dict[name].view(-1)
+                cur_params = param.detach().view(-1)
             else:
-                cur_params  = torch.cat((cur_params, (param.detach().view(-1) - server_state_dict[name].view(-1))), dim=0)
+                cur_params  = torch.cat((cur_params, param.detach().view(-1)), dim=0)
 
         self.prev_grads -= self.alpha * (cur_params - ser_params)
                     
