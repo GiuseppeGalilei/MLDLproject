@@ -39,8 +39,12 @@ class FedDynServer():
                 sum_deltas[key] += client_state[key] - self.model.state_dict()[key]
         
         # update h
+        cnt = 0
         for key in self.h.keys():
-            self.h[key] -= self.alpha * sum_deltas[key] / float(self.num_clients)
+            if self.h[key].dtype == torch.LongTensor:
+                cnt += 1
+            self.h[key] -= (self.alpha * sum_deltas[key] / self.num_clients).long()
+        print(cnt)
 
         sum_thetas = defaultdict(lambda: 0.0)
         for client_state in active_clients_states:
