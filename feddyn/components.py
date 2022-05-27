@@ -32,7 +32,7 @@ class FedDynServer():
     def update_model(self, active_clients_states):
         num_participants = len(active_clients_states)
 
-        sum_deltas = defaultdict(lambda _: 0.0)
+        sum_deltas = defaultdict(lambda: 0.0)
         for client_state in active_clients_states:
             for key in client_state.keys():
                 sum_deltas[key] += client_state[key] - self.model.state_dict()[key]
@@ -41,7 +41,7 @@ class FedDynServer():
         for key in self.h.keys():
             self.h[key] -= self.alpha * sum_deltas[key] / self.num_clients
 
-        sum_thetas = defaultdict(lambda _: 0.0)
+        sum_thetas = defaultdict(lambda: 0.0)
         for client_state in active_clients_states:
             for key in client_state.keys():
                 sum_thetas[key] += client_state[key]
@@ -104,6 +104,7 @@ class FedDynClient():
 
     def train(self, server_state_dict, round):
         self.model.train()
+        print("Training client", self.id, "...", end=" ")
 
         metrics = []
         for epoch in range(self.local_epochs):
@@ -140,6 +141,6 @@ class FedDynClient():
                 epoch_lin_penalty += lin_penalty.item()
                 epoch_quad_loss += quad_penalty.item()
                 epoch_mod_loss += mod_loss.item()
-
+        print("done!")
         return self.model.state_dict(), metrics
 
