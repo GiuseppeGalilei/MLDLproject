@@ -41,8 +41,8 @@ class FedDynServer():
         num_participants = len(active_clients_states)
 
         self.h = {
-            key: h - self.alpha / self.num_clients * sum(theta[key] - server[key] for theta in active_clients_states)
-            for (key, h), server in zip(self.h.items(), self.model.state_dict().values())
+            key: h - self.alpha / self.num_clients * sum(theta[key] - server_param for theta in active_clients_states)
+            for (key, h), server_param in zip(self.h.items(), self.model.state_dict().values())
         }
         
         par = {
