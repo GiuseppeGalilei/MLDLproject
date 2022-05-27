@@ -30,6 +30,7 @@ class FedDynServer():
         self.test_metrics_list = []
 
     def update_model(self, active_clients_states):
+        print("Updating server model...", end=" ")
         num_participants = len(active_clients_states)
 
         sum_deltas = defaultdict(lambda: 0.0)
@@ -49,9 +50,13 @@ class FedDynServer():
         # update server model
         for key in self.model.state_dict().keys():
             self.model.state_dict()[key] = sum_thetas[key] / num_participants - self.h[key] / self.alpha
+            
+        print("done")
 
     def evaluate(self, round):
         self.model.eval()
+        print("Evaluating model at round", round, "...", end=" ")
+        
         test_loss = 0
         correct = 0
         total = 0
@@ -69,6 +74,8 @@ class FedDynServer():
             "test_accuracy": correct / total,
             "test_avg_loss": test_loss / len(self.test_loader)
         })
+        
+        print("done!")
 
     def get_test_metrics(self):
         return self.test_metrics_list
