@@ -40,7 +40,7 @@ class FedDynServer():
         
         # update h
         for key in self.h.keys():
-            self.h[key] -= self.alpha * sum_deltas[key] / self.num_clients
+            self.h[key] -= (self.alpha * sum_deltas[key] / self.num_clients).long()
 
         sum_thetas = defaultdict(lambda: 0.0)
         for client_state in active_clients_states:
