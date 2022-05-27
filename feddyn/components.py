@@ -127,7 +127,10 @@ class FedDynClient():
 
                 delta_params = None
                 for name, param in self.model.named_parameters():
-                    delta_params = torch.cat((delta_params, (param.view(-1) - server_state_dict[name].view(-1))), dim=0)
+                    if not isinstance(delta_params, torch.Tensor):
+                        delta_params = (param.view(-1) - server_state_dict[name].view(-1)
+                    else:
+                        delta_params = torch.cat((delta_params, (param.view(-1) - server_state_dict[name].view(-1))), dim=0)
                 quad_penalty = self.alpha / 2 * torch.norm(delta_params)**2
 
                 mod_loss = loss - lin_penalty + quad_penalty
