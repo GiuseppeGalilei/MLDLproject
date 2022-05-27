@@ -23,7 +23,7 @@ class FedDynServer():
 
         self.h = {
             key: torch.zeros(params.shape, device=device)
-            for key, params in sel.model.state_dict().items()
+            for key, params in self.model.state_dict().items()
         }
 
         self.criterion = nn.CrossEntropyLoss()
@@ -44,7 +44,7 @@ class FedDynServer():
 
         new_parameters = {
             key: (1 / K) * sum(theta[key] for theta in active_clients_states)
-            for key in net.state_dict().keys()
+            for key in self.model.state_dict().keys()
         }
 
         new_parameters = {
