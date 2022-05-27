@@ -42,7 +42,7 @@ class FedDynServer():
 
         self.h = {
             key: h - self.alpha / self.num_clients * sum(theta[key] - server[key] for theta in active_clients_states)
-            for key, h, server in zip(self.h.items(), self.model.state_dict().values())
+            for (key, h), server in zip(self.h.items(), self.model.state_dict().values())
         }
         
         par = {
@@ -52,7 +52,7 @@ class FedDynServer():
         
         par = {
             key: param - 1 / self.alpha * h_param
-            for key, param, h_param in zip(par.items(), self.h.values())
+            for (key, param), h_param in zip(par.items(), self.h.values())
         }
             
         self.model.load_state_dict(par)
