@@ -118,7 +118,7 @@ class FedDynClient():
 
     def train(self, server_state_dict, round):
         self.model.load_state_dict(server_state_dict)
-        self.optim = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.5)
+        self.optim = optim.SGD(self.model.parameters(), lr=self.lr, weight_decay=1e-4)
         self.model.train()
         print("Training client", self.id, "...", end=" ")
 
