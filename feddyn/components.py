@@ -91,7 +91,7 @@ class FedDynClient():
         self.criterion = nn.CrossEntropyLoss()
         self.optim = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.5)
         self.train_loader = DataLoader(DatasetSplit(self.trainset, self.data_idxs), batch_size=128,
-            num_workers=2, worker_init=seed_worker, generator=g)
+            num_workers=2, worker_init_fn=seed_worker, generator=g)
 
         self.prev_grads = None
         for param in self.model.parameters():
