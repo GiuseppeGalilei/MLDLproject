@@ -66,10 +66,10 @@ class Server:
             delta_theta[key] = sum_theta[key] - self.model.state_dict()[key]
 
         for key in self.h.keys():
-            self.h[key] -= (self.alpha * (1./self.num_clients) * delta_theta[key].float()).long()
+            self.h[key] -= (self.alpha * (1./self.num_clients) * delta_theta[key].float()).to(self.h[key].dtype)
 
         for key in self.model.state_dict().keys():
-            self.model.state_dict()[key] = (1./num_participants) * sum_theta[key] - (1./self.alpha) *  self.h[key]
+            self.model.state_dict()[key] = ((1./num_participants) * sum_theta[key] - (1./self.alpha) *  self.h[key]).to(self.model.state_dict()[key].dtype)
         print("Server: Updated model.")
 
     def evaluate(self):
