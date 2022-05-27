@@ -142,7 +142,7 @@ class FedDynClient():
                 quad_penalty = self.alpha / 2 * torch.norm(delta_params)**2
 
                 mod_loss = loss - lin_penalty + quad_penalty
-                mod_loss.backward()
+                mod_loss.backward(retain_graph=True)
 
                 epoch_loss += loss.item()
                 epoch_lin_penalty += lin_penalty.item()
