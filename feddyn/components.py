@@ -139,10 +139,11 @@ class FedDynClient():
                         delta_params = param.view(-1) - server_state_dict[name].view(-1)
                     else:
                         delta_params = torch.cat((delta_params, (param.view(-1) - server_state_dict[name].view(-1))), dim=0)
-                quad_penalty = self.alpha / 2 * torch.norm(delta_params)**2
+                quad_penalty = self.alpha / 2 * torch.linalg.norm(delta_params, 2)**2
 
                 mod_loss = loss - lin_penalty + quad_penalty
-                mod_loss.backward(retain_graph=True)
+                mod_loss.backward()
+                self.optim.step()
 
                 epoch_loss += loss.item()
                 epoch_lin_penalty += lin_penalty.item()
