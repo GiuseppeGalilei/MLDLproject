@@ -110,20 +110,18 @@ class FedDynClient():
         self.train_metrics_list = []
 
     def train(self, server_state_dict, round):
+        self.model.load_state_dict(server_state_dict)
         self.model.train()
         print("Training client", self.id, "...", end=" ")
 
-        metrics = []
+        loss_v = 0
         for epoch in range(self.local_epochs):
-            epoch_loss = 0
-            epoch_lin_penalty = 0
-            epoch_quad_loss = 0
-            epoch_mod_loss = 0
             for img, lbl in self.train_loader:
+                self.optim.zero_grad()
                 img, lbl = img.to(self.device), lbl.to(self.device)
                 y = self.model(img)
-                self.optim.zero_grad()
                 loss = self.criterion(y, lbl)
+                loss_v += loss.item()
 
                 cur_params = None
                 for param in self.model.parameters():
@@ -133,23 +131,18 @@ class FedDynClient():
                         cur_params = torch.cat((cur_params, param.view(-1)), dim=0)
                 lin_penalty = torch.sum(cur_params * self.prev_grads)
 
-                delta_params = None
+                ser_params = None
                 for name, param in self.model.named_parameters():
-                    if not isinstance(delta_params, torch.Tensor):
-                        delta_params = param.view(-1) - server_state_dict[name].view(-1)
+                    if not isinstance(ser_params, torch.Tensor):
+                        delta_params = server_state_dict[name].view(-1)
                     else:
-                        delta_params = torch.cat((delta_params, (param.view(-1) - server_state_dict[name].view(-1))), dim=0)
-                quad_penalty = self.alpha / 2 * torch.linalg.norm(delta_params, 2)**2
+                        ser_params = torch.cat((ser_params, server_state_dict[name].view(-1)), dim=0)
+                quad_penalty = self.alpha / 2 * torch.linalg.norm((cur_params - ser_params), 2)**2
 
                 mod_loss = loss - lin_penalty + quad_penalty
                 mod_loss.backward()
                 torch.nn.utils.clip_grad_norm_(parameters=self.model.parameters(), max_norm=10)
                 self.optim.step()
-
-                epoch_loss += loss.item()
-                epoch_lin_penalty += lin_penalty.item()
-                epoch_quad_loss += quad_penalty.item()
-                epoch_mod_loss += mod_loss.item()
                 
         delta_param = None
         for name, param in self.model.named_parameters():
@@ -160,6 +153,6 @@ class FedDynClient():
 
         self.prev_grads -= self.alpha * delta_param
                     
-        print(f"done! last epoch loss={epoch_loss}")
+        print("done!")
         return self.model.state_dict(), metrics
 
