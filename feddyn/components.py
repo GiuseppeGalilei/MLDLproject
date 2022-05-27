@@ -151,7 +151,7 @@ class FedDynClient():
                 
         delta_param = None
         for name, param in self.model.named_parameters():
-            if not isinstence(delta_param, torch.Tensor):
+            if not isinstance(delta_param, torch.Tensor):
                 delta_params = param.view(-1) - server_state_dict[name].view(-1)
             else:
                 delta_param  = torch.cat((delta_param, (param.view(-1) - server_state_dict[name].view(-1))), dim=0)
