@@ -149,8 +149,14 @@ class FedDynClient():
                 epoch_quad_loss += quad_penalty.item()
                 epoch_mod_loss += mod_loss.item()
                 
-            for name, param in self.model.named_parameters():
-                param -= (self.alpha * (sel.model[name] - server_state_dict[name])).type(param.dtype)
+        delta_param = None
+        for name, param in self.model.named_parameters():
+            if not isinstence(delta_param, torch.Tensor):
+                delta_params = param.view(-1) - server_state_dict[name].view(-1)
+            else:
+                delta_param  = torch.cat((delta_param, (param.view(-1) - server_state_dict[name].view(-1))), dim=0)
+
+        self.prev_grads -= self.alpha * delta_param
                     
         print(f"done! last epoch loss={epoch_loss}")
         return self.model.state_dict(), metrics
