@@ -48,7 +48,7 @@ class FedDynServer():
                 sum_thetas[key] += client_state[key]
 
         # update server model
-        par = copy.deepcopy(delf.model.state_dict())
+        par = copy.deepcopy(self.model.state_dict())
         for key in self.model.state_dict().keys():
             par[key] = (sum_thetas[key] / num_participants - self.h[key] / self.alpha).type(par[key].dtype)
             
