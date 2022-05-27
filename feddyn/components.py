@@ -148,6 +148,10 @@ class FedDynClient():
                 epoch_lin_penalty += lin_penalty.item()
                 epoch_quad_loss += quad_penalty.item()
                 epoch_mod_loss += mod_loss.item()
-        print("done!")
+                
+            for name, param in self.model.named_parameters():
+                param -= (self.alpha * (sel.model[name] - server_state_dict[name])).type(param.dtype)
+                    
+        print(f"done! last epoch loss={epoch_loss}")
         return self.model.state_dict(), metrics
 
