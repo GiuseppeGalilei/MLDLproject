@@ -116,6 +116,7 @@ class FedDynClient():
         print("Training client", self.id, "...", end=" ")
 
         loss_v = 0
+        metrics = []
         for epoch in range(self.local_epochs):
             for img, lbl in self.train_loader:
                 self.optim.zero_grad()
@@ -154,6 +155,6 @@ class FedDynClient():
 
         self.prev_grads -= self.alpha * delta_param
                     
-        print("done!")
+        print(f"done! average loss={loss_v/len(self.train_loader.dataset)}")
         return self.model.state_dict(), metrics
 
