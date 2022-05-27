@@ -94,7 +94,7 @@ class FedDynServer():
 class FedDynClient():
     def __init__(self, model, device, lr, wd, mm, alpha, id, local_epochs, trainset, data_idxs):
         self.device = device
-        self.model = model.to(self.device)
+        self.model = model
         self.id = id
         self.alpha = alpha
         self.lr = lr
@@ -119,6 +119,7 @@ class FedDynClient():
         self.train_metrics_list = []
 
     def train(self, server_state_dict, round):
+        self.model.to(self.device)
         self.model.load_state_dict(server_state_dict)
         self.optim = optim.SGD(self.model.parameters(), lr=self.lr, weight_decay=self.wd, momentum=self.mm)
         self.model.train()
@@ -146,10 +147,12 @@ class FedDynClient():
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(parameters=self.model.parameters(), max_norm=10)
                 self.optim.step()
+            del img, lbl
                 
         cur_flat = torch.cat([p.detach().reshape(-1) for p in self.model.parameters()])
 
         self.prev_grads -= self.alpha * (cur_flat - par_flat)
                     
         print(f"done! average loss={loss_v/len(self.train_loader)}")
+        self.model.to("cpu")
         return self.model.state_dict(), metrics
