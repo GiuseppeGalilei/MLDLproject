@@ -52,7 +52,7 @@ class FedDynServer():
         
         par = {
             key: param - 1 / self.alpha * h_param
-            for key, param, h_param n zip(par.items(), self.h.values())
+            for key, param, h_param in zip(par.items(), self.h.values())
         }
             
         self.model.load_state_dict(par)
