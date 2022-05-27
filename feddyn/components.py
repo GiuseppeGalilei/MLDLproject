@@ -39,11 +39,11 @@ class FedDynServer():
                 sum_deltas[key] += client_state[key] - self.model.state_dict()[key]
         
         # update h
-        types = []
         for key in self.h.keys():
-            types.append(self.h[key].dtype)
-            self.h[key] -= (self.alpha * sum_deltas[key] / self.num_clients).long()
-        print(types)
+            if self.h[key].dtype == torch.int64:
+                self.h[key] -= (self.alpha * sum_deltas[key] / self.num_clients).long()
+            else:
+                self.h[key] -= self.alpha * sum_deltas[key] / self.num_clients
 
         sum_thetas = defaultdict(lambda: 0.0)
         for client_state in active_clients_states:
