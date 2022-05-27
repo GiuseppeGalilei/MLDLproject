@@ -146,14 +146,14 @@ class FedDynClient():
                 torch.nn.utils.clip_grad_norm_(parameters=self.model.parameters(), max_norm=10)
                 self.optim.step()
                 
-        delta_param = None
+        cur_params = None
         for name, param in self.model.named_parameters():
-            if not isinstance(delta_param, torch.Tensor):
-                delta_param = param.view(-1) - server_state_dict[name].view(-1)
+            if not isinstance(cur_params, torch.Tensor):
+                cur_params = param.detach().view(-1) - server_state_dict[name].view(-1)
             else:
-                delta_param  = torch.cat((delta_param, (param.view(-1) - server_state_dict[name].view(-1))), dim=0)
+                cur_params  = torch.cat((cur_params, (param.detach().view(-1) - server_state_dict[name].view(-1))), dim=0)
 
-        self.prev_grads -= self.alpha * delta_param
+        self.prev_grads -= self.alpha * (cur_params - ser_params)
                     
         print(f"done! average loss={loss_v/len(self.train_loader)}")
         return self.model.state_dict(), metrics
