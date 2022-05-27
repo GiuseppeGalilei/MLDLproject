@@ -40,10 +40,7 @@ class FedDynServer():
         
         # update h
         for key in self.h.keys():
-            if self.h[key].dtype == torch.int64:
-                self.h[key] -= (self.alpha * sum_deltas[key] / self.num_clients).long()
-            else:
-                self.h[key] -= self.alpha * sum_deltas[key] / self.num_clients
+            self.h[key] -= (self.alpha * sum_deltas[key] / self.num_clients).type(self.h[key].dtype)
 
         sum_thetas = defaultdict(lambda: 0.0)
         for client_state in active_clients_states:
@@ -52,9 +49,9 @@ class FedDynServer():
 
         # update server model
         for key in self.model.state_dict().keys():
-            self.model.state_dict()[key] = sum_thetas[key] / num_participants - self.h[key] / self.alpha
+            self.model.state_dict()[key] = (sum_thetas[key] / num_participants - self.h[key] / self.alpha).type(self.model.state_dict()[key].dtype)
             
-        print("done")
+        print("done!")
 
     def evaluate(self, round):
         self.model.eval()
