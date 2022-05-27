@@ -21,7 +21,10 @@ class FedDynServer():
         self.model = model.to(self.device)
         self.seed = seed
 
-        self.h = copy.deepcopy(self.model.state_dict())
+        self.h = {
+            key: torch.zeros(params.shape, device=device)
+            for key, params in net.state_dict().items()
+        }
 
         self.criterion = nn.CrossEntropyLoss()
         self.test_loader = DataLoader(testset, batch_size=100, 
@@ -32,27 +35,24 @@ class FedDynServer():
     def update_model(self, active_clients_states):
         print("Updating server model...", end=" ")
         num_participants = len(active_clients_states)
-
-        sum_deltas = defaultdict(lambda: 0.0)
-        for client_state in active_clients_states:
-            for key in client_state.keys():
-                sum_deltas[key] += client_state[key] - self.model.state_dict()[key]
         
-        # update h
-        for key in self.h.keys():
-            self.h[key] -= (self.alpha * sum_deltas[key] / self.num_clients).type(self.h[key].dtype)
+        self.h = {
+            key: prev_h
+            - feddyn_alpha * 1 / m * sum(theta[key] - old_params for theta in active_clients_states)
+            for (key, prev_h), old_params in zip(self.h.items(), self.model.state_dict().values())
+        }
 
-        sum_thetas = defaultdict(lambda: 0.0)
-        for client_state in active_clients_states:
-            for key in client_state.keys():
-                sum_thetas[key] += client_state[key]
+        new_parameters = {
+            key: (1 / K) * sum(theta[key] for theta in active_clients_states)
+            for key in net.state_dict().keys()
+        }
 
-        # update server model
-        par = copy.deepcopy(self.model.state_dict())
-        for key in self.model.state_dict().keys():
-            par[key] = (sum_thetas[key] / num_participants - self.h[key] / self.alpha).type(par[key].dtype)
-            
-        self.model.load_state_dict(par)
+        new_parameters = {
+            key: params - (1 / feddyn_alpha) * h_params
+            for (key, params), h_params in zip(new_parameters.items(), self.h.values())
+        }
+
+        self.model.load_state_dict(new_parameters)
             
         print("done!")
 
