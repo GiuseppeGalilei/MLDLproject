@@ -115,6 +115,7 @@ class FedDynClient():
                 self.prev_grads = torch.zeros_like(param.view(-1))
             else:
                 self.prev_grads = torch.cat((self.prev_grads, torch.zeros_like(param.view(-1))), dim=0)
+        self.prev_grads.to(self.device)
 
         self.train_metrics_list = []
 
