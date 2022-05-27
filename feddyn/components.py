@@ -46,7 +46,7 @@ class FedDynServer():
         }
         
         par = {
-            key: 1 / num_participants * sum(theta[key] for theta in active_clients_state)
+            key: 1 / num_participants * sum(theta[key] for theta in active_clients_states)
             for key in self.model.state_dict().keys()
         }
         
