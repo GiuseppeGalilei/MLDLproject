@@ -96,7 +96,7 @@ class FedDynClient():
         self.data_idxs = data_idxs
 
         self.criterion = nn.CrossEntropyLoss()
-        self.optim = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.5)
+        self.optim = None
         self.train_loader = DataLoader(DatasetSplit(self.trainset, self.data_idxs), batch_size=128,
             num_workers=2, worker_init_fn=seed_worker, generator=g)
 
@@ -111,6 +111,7 @@ class FedDynClient():
 
     def train(self, server_state_dict, round):
         self.model.load_state_dict(server_state_dict)
+        self.optim = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.5)
         self.model.train()
         print("Training client", self.id, "...", end=" ")
 
