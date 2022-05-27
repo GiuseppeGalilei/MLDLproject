@@ -10,6 +10,11 @@ from utils.datasets import DatasetSplit
 
 g = torch.Generator()
 
+
+def flatten(model):
+    return troch.cat([param.reshape(-1) for param in model.parameters()])
+
+
 class FedDynServer():
     def __init__(self, model, alpha, num_clients, device, testset, seed):
         make_it_reproducible(seed)
@@ -35,24 +40,20 @@ class FedDynServer():
         print("Updating server model...", end=" ")
         num_participants = len(active_clients_states)
 
-        sum_deltas = defaultdict(lambda: 0.0)
-        for client_state in active_clients_states:
-            for key in client_state.keys():
-                sum_deltas[key] += client_state[key] - self.model.state_dict()[key]
+        self.h = {
+            key: h - self.alpha / self.num_clients * sum(theta[key] - server[key] for theta in active_clients_states)
+            for key, h, server in zip(self.h.items(), self.model.state_dict().values())
+        }
         
-        # update h
-        for key in self.h.keys():
-            self.h[key] -= (self.alpha * sum_deltas[key] / self.num_clients).type(self.h[key].dtype)
-
-        sum_thetas = defaultdict(lambda: 0.0)
-        for client_state in active_clients_states:
-            for key in client_state.keys():
-                sum_thetas[key] += client_state[key]
-
-        # update server model
-        par = copy.deepcopy(self.model.state_dict())
-        for key in self.model.state_dict().keys():
-            par[key] = (sum_thetas[key] / num_participants - self.h[key] / self.alpha).type(par[key].dtype)
+        par = {
+            key: 1 / num_participants * sum(theta[key] for theta in active_clients_state)
+            for key in self.model.state_dict().keys()
+        }
+        
+        par = {
+            key: param - 1 / self.alpha * h_param
+            for key, param, h_param n zip(par.items(), self.h.values())
+        }
             
         self.model.load_state_dict(par)
             
@@ -79,6 +80,7 @@ class FedDynServer():
             "test_accuracy": correct / total,
             "test_avg_loss": test_loss / len(self.test_loader)
         })
+        self.model.train()
         
         print("done!")
 
@@ -130,35 +132,22 @@ class FedDynClient():
                 loss = self.criterion(y, lbl)
                 loss_v += loss.item()
 
-                cur_params = None
-                for param in self.model.parameters():
-                    if not isinstance(cur_params, torch.Tensor):
-                        cur_params = param.view(-1)
-                    else:
-                        cur_params = torch.cat((cur_params, param.view(-1)), dim=0)
-                lin_penalty = torch.sum(cur_params * self.prev_grads)
+                cur_flat = torch.cat([p.reshape(-1) for p in self.model.parameters()])
+                # Flatten the current server parameters
+                par_flat = torch.cat([p.reshape(-1) for k, p in server_state_dict.items() if k in [k1 for k1, v in self.model.named_parameters()] ])
+                #assert(cur_flat.requires_grad)
 
-                ser_params = None
-                for name, param in self.model.named_parameters():
-                    if not isinstance(ser_params, torch.Tensor):
-                        ser_params = server_state_dict[name].view(-1)
-                    else:
-                        ser_params = torch.cat((ser_params, server_state_dict[name].view(-1)), dim=0)
-                quad_penalty = self.alpha / 2 * torch.linalg.norm((cur_params - ser_params), 2)**2
+                lin_penalty = torch.sum(self.prev_grads * cur_flat)
+                quad_penalty = self.alpha / 2 * torch.linalg.norm((cur_flat - par_flat), 2)**2
 
                 loss = loss - lin_penalty + quad_penalty
                 loss.backward()
-                torch.nn.utils.clip_grad_norm_(parameters=self.model.parameters(), max_norm=10)
+#                 torch.nn.utils.clip_grad_norm_(parameters=self.model.parameters(), max_norm=10)
                 self.optim.step()
                 
-        cur_params = None
-        for name, param in self.model.named_parameters():
-            if not isinstance(cur_params, torch.Tensor):
-                cur_params = param.detach().view(-1)
-            else:
-                cur_params  = torch.cat((cur_params, param.detach().view(-1)), dim=0)
+        cur_flat = torch.cat([p.detach().reshape(-1) for p in self.model.parameters()])
 
-        self.prev_grads -= self.alpha * (cur_params - ser_params)
+        self.prev_grads -= self.alpha * (cur_flat - par_flat)
                     
         print(f"done! average loss={loss_v/len(self.train_loader)}")
         return self.model.state_dict(), metrics
