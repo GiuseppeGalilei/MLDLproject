@@ -31,7 +31,7 @@ class Server:
         self.num_clients = num_clients
         self.h = self.model.state_dict().copy()
 
-        self.criterion = nn.NLLLoss()
+        self.criterion = nn.CrossEntropyLoss()
         data = torch.load(self.data_dir / "test_data.pth")
         self.test_loader = DataLoader(data,
                                  batch_size=1000,
@@ -129,8 +129,8 @@ class ClientNode:
         self.learning_rate = learning_rate
         self.batch_size = batch_size
         self.data_dir = data_dir
-        # self.criterion = nn.CrossEntropyLoss()
-        self.criterion = nn.NLLLoss()
+        self.criterion = nn.CrossEntropyLoss()
+        #self.criterion = nn.NLLLoss()
         self.optim = SGD(self.model.parameters(),
                          lr=self.learning_rate,
                          weight_decay=1e-4)
@@ -317,17 +317,17 @@ if __name__ == "__main__":
     import torchvision.transforms as transforms
     #
     d = dataPrep("CIFAR10", root_dir =Path("../Data/"))
-    d.make(1, 10, dir_alpha=0.7, lognorm_std=0.3, show_plots=False)
+    d.make(0, 10, dir_alpha=0.7, lognorm_std=0.3, show_plots=False)
 
     f = FedDyn(model = ResNet50().cuda(),
                num_clients = 10,
                data_dir= Path("../Data/client_data"),
                batch_size = 128,
-               learning_rate = 0.1,
+               learning_rate = 0.01,
                alpha=0.01)
 
-    f.run(num_epochs=1,
-          num_rounds=3,
-          participation_level=0.3,
+    f.run(num_epochs=3,
+          num_rounds=10,
+          participation_level=0.6,
           exp_name=r"MNIST 50% Non-IID balanced")
 
