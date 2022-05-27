@@ -23,7 +23,7 @@ class FedDynServer():
 
         self.h = {
             key: torch.zeros(params.shape, device=device)
-            for key, params in net.state_dict().items()
+            for key, params in sel.model.state_dict().items()
         }
 
         self.criterion = nn.CrossEntropyLoss()
