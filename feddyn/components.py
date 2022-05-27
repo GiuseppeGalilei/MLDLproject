@@ -141,8 +141,8 @@ class FedDynClient():
                         ser_params = torch.cat((ser_params, server_state_dict[name].view(-1)), dim=0)
                 quad_penalty = self.alpha / 2 * torch.linalg.norm((cur_params - ser_params), 2)**2
 
-                mod_loss = loss - lin_penalty + quad_penalty
-                mod_loss.backward()
+                loss = loss - lin_penalty + quad_penalty
+                loss.backward()
                 torch.nn.utils.clip_grad_norm_(parameters=self.model.parameters(), max_norm=10)
                 self.optim.step()
                 
