@@ -155,6 +155,6 @@ class FedDynClient():
 
         self.prev_grads -= self.alpha * delta_param
                     
-        print(f"done! average loss={loss_v/len(self.train_loader.dataset)}")
+        print(f"done! average loss={loss_v/len(self.train_loader)}")
         return self.model.state_dict(), metrics
 
