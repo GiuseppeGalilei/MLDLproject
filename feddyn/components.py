@@ -24,7 +24,7 @@ class FedDynServer():
         for key in self.model.state_dict():
             self.h[key] = torch.zeros_like(self.model.state_dict()[key])
 
-        if not os.exists(client_dir):
+        if not os.path.exists(client_dir):
             os.mkdir(client_dir)
         
         for i in range(num_clients):
@@ -111,8 +111,8 @@ class FedDynClient():
     def train(self, model, server_state_dict, round):
         print("Training client", self.id, "...", end=" ")
 
-        prev_grads = torch.load(client_dir + f"{id}.pt")["prev_grads"].to(self.device)
-        model.load_state_dict(server_state_dict).to(self.device)
+        prev_grads = torch.load(client_dir + f"{self.id}.pt")["prev_grads"].to(self.device)
+        model.load_state_dict(server_state_dict)
         optim = nn.optim.SGD(model.parameters(), lr=self.lr, weight_decay=self.wd, momentum=self.mm)
         model.train()
 
