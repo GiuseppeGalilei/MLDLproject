@@ -23,12 +23,12 @@ class FedDynServer():
         self.h = dict()
         for key in self.model.state_dict():
             self.h[key] = torch.zeros_like(self.model.state_dict()[key])
-            
-        pg = torch.cat([param.reshape(-1) for param in self.model.parameters()])
 
         if not os.path.exists(client_dir):
             os.mkdir(client_dir)
         
+        pg = torch.cat([param.reshape(-1) for param in self.model.parameters()])
+
         for i in range(num_clients):
             torch.save({"prev_grads": pg},
                 client_dir + f"{i}.pt")
@@ -142,12 +142,13 @@ class FedDynClient():
                 torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=10)
                 optim.step()
             del img, lbl
-                
-        cur_flat = torch.cat([p.detach().reshape(-1) for p in model.parameters()])
 
-        prev_grads -= self.alpha * (cur_flat - par_flat)
-        torch.save({"prev_grads": prev_grads},
-            client_dir + f"{self.id}.pt")
+        with torch.no_grad():  
+            cur_flat = torch.cat([p.detach().reshape(-1) for p in model.parameters()])
+
+            prev_grads -= self.alpha * (cur_flat - par_flat)
+            torch.save({"prev_grads": prev_grads},
+                client_dir + f"{self.id}.pt")
                     
         print(f"done! average loss={loss_v/len(self.train_loader)}")
         return model.state_dict(), metrics
