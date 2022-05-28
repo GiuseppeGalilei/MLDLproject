@@ -139,7 +139,7 @@ class FedDynClient():
 
                 loss = loss - lin_penalty + quad_penalty
                 loss.backward()
-                torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=10)
+                torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=5)
                 optim.step()
             del img, lbl
 
