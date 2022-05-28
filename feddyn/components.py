@@ -103,7 +103,7 @@ class FedDynClient():
         self.wd = wd
         self.mm = mm
         self.local_epochs = local_epochs
-        self.clip_values = clip_values
+        self.clip_value = clip_value
 
         self.criterion = nn.CrossEntropyLoss()
         self.train_loader = DataLoader(DatasetSplit(trainset, data_idxs), batch_size=128,
@@ -140,7 +140,7 @@ class FedDynClient():
 
                 loss = loss - lin_penalty + quad_penalty
                 loss.backward()
-                torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=self.clip_values)
+                torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=self.clip_value)
                 optim.step()
             del img, lbl
 
