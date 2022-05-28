@@ -83,7 +83,7 @@ class FedDynServer():
         self.test_metrics_list.append({
             "round": round,
             "test_accuracy": correct / total,
-            "test_avg_loss": test_loss
+            "test_avg_loss": test_loss_avg
         })
         self.model.train()
         
