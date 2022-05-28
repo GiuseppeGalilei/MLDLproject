@@ -75,7 +75,7 @@ class FedDynServer():
                 img, lbl = img.to(self.device), lbl.to(self.device)
                 y = self.model(img)
                 n += 1
-                test_loss_avg = (n-1) / n * test_loss_avg + 1 / n * self.criterion(y, lbl).item()
+                test_loss_avg = (n-1) / n * test_loss_avg + 1 / n * self.criterion(y, lbl).item() / lbl.shape(0)
                 _, predicted = torch.max(y.data, 1)
                 total += lbl.size(0)
                 correct += (predicted == lbl).sum().item()
@@ -124,6 +124,8 @@ class FedDynClient():
 
         loss_avg = 0
         n = 0
+        correct = 0
+        total = 0
         metrics = []
         for epoch in range(self.local_epochs):
             for img, lbl in self.train_loader:
@@ -132,7 +134,11 @@ class FedDynClient():
                 y = model(img)
                 loss = self.criterion(y, lbl)
                 n += 1
-                loss_avg = (n-1) / n * loss_avg + 1 / n * loss.item()
+                loss_avg = (n-1) / n * loss_avg + 1 / n * loss.item() / lbl.shape(0)
+                
+                _, predicted = torch.max(y.data, 1)
+                total += lbl.size(0)
+                correct += (predicted == lbl).sum().item()
 
                 cur_flat = torch.cat([p.reshape(-1) for p in model.parameters()])
                 # Flatten the current server parameters
@@ -155,5 +161,5 @@ class FedDynClient():
             torch.save({"prev_grads": prev_grads},
                 client_dir + f"{self.id}.pt")
                     
-        print(f"done! average batch loss={loss_avg}")
+        print(f"done! train loss per image={loss_avg}\t train accuracy={correct/total}")
         return model.state_dict(), metrics
