@@ -95,7 +95,7 @@ class FedDynServer():
 
 
 class FedDynClient():
-    def __init__(self, device, lr, wd, mm, alpha, id, local_epochs, trainset, data_idxs):
+    def __init__(self, device, lr, wd, mm, alpha, id, local_epochs, trainset, data_idxs, clip_value):
         self.device = device
         self.id = id
         self.alpha = alpha
@@ -103,6 +103,7 @@ class FedDynClient():
         self.wd = wd
         self.mm = mm
         self.local_epochs = local_epochs
+        self.clip_values = clip_values
 
         self.criterion = nn.CrossEntropyLoss()
         self.train_loader = DataLoader(DatasetSplit(trainset, data_idxs), batch_size=128,
@@ -139,7 +140,7 @@ class FedDynClient():
 
                 loss = loss - lin_penalty + quad_penalty
                 loss.backward()
-                torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=5)
+                torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=self.clip_values)
                 optim.step()
             del img, lbl
 
