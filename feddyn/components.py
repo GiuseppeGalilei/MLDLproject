@@ -1,14 +1,14 @@
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
+import os
 
 from utils.reproducibility import seed_worker, make_it_reproducible
 from utils.datasets import DatasetSplit
 
 g = torch.Generator()
 
-client_dir = Path("/content/client_states")
-
+client_dir = "./feddyn/client_states/"
 
 class FedDynServer():
     def __init__(self, model, alpha, num_clients, device, testset, seed):
@@ -24,9 +24,12 @@ class FedDynServer():
         for key in self.model.state_dict():
             self.h[key] = torch.zeros_like(self.model.state_dict()[key])
 
+        if not os.exists(client_dir):
+            os.mkdir(client_dir)
+        
         for i in range(num_clients):
             torch.save({"prev_grads": self.h},
-                client_dir / f"{i}.pt")
+                client_dir + f"{i}.pt")
 
         self.criterion = nn.CrossEntropyLoss()
         self.test_loader = DataLoader(testset, batch_size=100, 
@@ -108,7 +111,7 @@ class FedDynClient():
     def train(self, model, server_state_dict, round):
         print("Training client", self.id, "...", end=" ")
 
-        prev_grads = torch.load(client_dir / f"{id}.pt")["prev_grads"].to(self.device)
+        prev_grads = torch.load(client_dir + f"{id}.pt")["prev_grads"].to(self.device)
         model.load_state_dict(server_state_dict).to(self.device)
         optim = nn.optim.SGD(model.parameters(), lr=self.lr, weight_decay=self.wd, momentum=self.mm)
         model.train()
@@ -141,7 +144,7 @@ class FedDynClient():
 
         prev_grads -= self.alpha * (cur_flat - par_flat)
         torch.save({"prev_grads": prev_grads},
-            client_dir / f"{self.id}.pt")
+            client_dir + f"{self.id}.pt")
                     
         print(f"done! average loss={loss_v/len(self.train_loader)}")
         return model.state_dict(), metrics
