@@ -66,14 +66,16 @@ class FedDynServer():
         self.model.eval()
         print("Evaluating server model at round", round, "...", end=" ")
         
-        test_loss = 0
+        test_loss_avg = 0
+        n = 0
         correct = 0
         total = 0
         with torch.no_grad():
             for img, lbl in self.test_loader:
                 img, lbl = img.to(self.device), lbl.to(self.device)
                 y = self.model(img)
-                test_loss += self.criterion(y, lbl).item()
+                n += 1
+                test_loss_avg = (n-1) / n * test_loss_avg + 1 / n * self.criterion(y, lbl).item()
                 _, predicted = torch.max(y.data, 1)
                 total += lbl.size(0)
                 correct += (predicted == lbl).sum().item()
@@ -81,7 +83,7 @@ class FedDynServer():
         self.test_metrics_list.append({
             "round": round,
             "test_accuracy": correct / total,
-            "test_avg_loss": test_loss / len(self.test_loader)
+            "test_avg_loss": test_loss
         })
         self.model.train()
         
@@ -120,7 +122,8 @@ class FedDynClient():
         optim = torch.optim.SGD(model.parameters(), lr=self.lr, weight_decay=self.wd, momentum=self.mm)
         model.train()
 
-        loss_v = 0
+        loss_avg = 0
+        n = 0
         metrics = []
         for epoch in range(self.local_epochs):
             for img, lbl in self.train_loader:
@@ -128,7 +131,8 @@ class FedDynClient():
                 img, lbl = img.to(self.device), lbl.to(self.device)
                 y = model(img)
                 loss = self.criterion(y, lbl)
-                loss_v += loss.item()
+                n += 1
+                loss_v = (n-1) / n * loss_avg + 1 / n * loss.item()
 
                 cur_flat = torch.cat([p.reshape(-1) for p in model.parameters()])
                 # Flatten the current server parameters
@@ -151,5 +155,5 @@ class FedDynClient():
             torch.save({"prev_grads": prev_grads},
                 client_dir + f"{self.id}.pt")
                     
-        print(f"done! average loss={loss_v/len(self.train_loader)}")
+        print(f"done! average batch loss={loss_avg}")
         return model.state_dict(), metrics
