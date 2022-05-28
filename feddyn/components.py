@@ -83,7 +83,7 @@ class FedDynServer():
         self.test_metrics_list.append({
             "round": round,
             "test_accuracy": correct / total,
-            "test_avg_loss": test_loss_avg
+            "test_avg_loss_per_image": test_loss_avg
         })
         self.model.train()
         
@@ -111,8 +111,6 @@ class FedDynClient():
         self.train_loader = DataLoader(DatasetSplit(trainset, data_idxs), batch_size=128,
             num_workers=2, worker_init_fn=seed_worker, generator=g)
 
-        self.train_metrics_list = []
-
     def train(self, model, server_state_dict, round):
         print("Training client", self.id, "...", end=" ")
 
@@ -126,7 +124,6 @@ class FedDynClient():
         n = 0
         correct = 0
         total = 0
-        metrics = []
         for epoch in range(self.local_epochs):
             for img, lbl in self.train_loader:
                 optim.zero_grad()
@@ -160,6 +157,12 @@ class FedDynClient():
             prev_grads -= self.alpha * (cur_flat - par_flat)
             torch.save({"prev_grads": prev_grads},
                 client_dir + f"{self.id}.pt")
+            
+        metrics = {
+            "round": round,
+            "train_avg_loss_per_image": loss_avg,
+            "train_accuracy": correct / total
+        }
                     
         print(f"done! train loss per image={loss_avg}\t train accuracy={correct/total}")
         return model.state_dict(), metrics
