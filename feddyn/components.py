@@ -23,12 +23,14 @@ class FedDynServer():
         self.h = dict()
         for key in self.model.state_dict():
             self.h[key] = torch.zeros_like(self.model.state_dict()[key])
+            
+        pg = torch.cat([param.reshape(-1) for param in self.model.parameters()])
 
         if not os.path.exists(client_dir):
             os.mkdir(client_dir)
         
         for i in range(num_clients):
-            torch.save({"prev_grads": self.h},
+            torch.save({"prev_grads": pg},
                 client_dir + f"{i}.pt")
 
         self.criterion = nn.CrossEntropyLoss()
@@ -111,9 +113,10 @@ class FedDynClient():
     def train(self, model, server_state_dict, round):
         print("Training client", self.id, "...", end=" ")
 
-        prev_grads = torch.load(client_dir + f"{self.id}.pt")["prev_grads"].to(self.device)
+        prev_grads = torch.load(client_dir + f"{self.id}.pt")["prev_grads"]
         model.load_state_dict(server_state_dict)
-        optim = nn.optim.SGD(model.parameters(), lr=self.lr, weight_decay=self.wd, momentum=self.mm)
+        model.to(self.device)
+        optim = torch.optim.SGD(model.parameters(), lr=self.lr, weight_decay=self.wd, momentum=self.mm)
         model.train()
 
         loss_v = 0
@@ -140,7 +143,7 @@ class FedDynClient():
                 optim.step()
             del img, lbl
                 
-        cur_flat = torch.cat([p.detach().reshape(-1) for p in self.model.parameters()])
+        cur_flat = torch.cat([p.detach().reshape(-1) for p in model.parameters()])
 
         prev_grads -= self.alpha * (cur_flat - par_flat)
         torch.save({"prev_grads": prev_grads},
