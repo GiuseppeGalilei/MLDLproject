@@ -37,8 +37,6 @@ class FedDynServer():
         self.test_loader = DataLoader(testset, batch_size=100, 
             shuffle=False, num_workers=2)
 
-        self.test_metrics_list = []
-
     def update_model(self, active_clients_states):
         print("Updating server model...", end=" ")
         num_participants = len(active_clients_states)
@@ -80,17 +78,15 @@ class FedDynServer():
                 total += lbl.size(0)
                 correct += (predicted == lbl).sum().item()
 
-        self.test_metrics_list.append({
+        metrics = {
             "round": round,
             "test_accuracy": correct / total,
             "test_avg_loss_per_image": test_loss_avg
-        })
+        }
         self.model.train()
         
         print("done!")
-
-    def get_test_metrics(self):
-        return self.test_metrics_list
+        return metrics
 
     def get_server_state(self):
         return self.model.state_dict()
