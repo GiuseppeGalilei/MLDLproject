@@ -75,7 +75,7 @@ class FedDynServer():
                 img, lbl = img.to(self.device), lbl.to(self.device)
                 y = self.model(img)
                 n += 1
-                test_loss_avg = (n-1) / n * test_loss_avg + 1 / n * self.criterion(y, lbl).item() / lbl.shape(0)
+                test_loss_avg = (n-1) / n * test_loss_avg + 1 / n * self.criterion(y, lbl).item() / lbl.size(0)
                 _, predicted = torch.max(y.data, 1)
                 total += lbl.size(0)
                 correct += (predicted == lbl).sum().item()
@@ -134,7 +134,7 @@ class FedDynClient():
                 y = model(img)
                 loss = self.criterion(y, lbl)
                 n += 1
-                loss_avg = (n-1) / n * loss_avg + 1 / n * loss.item() / lbl.shape(0)
+                loss_avg = (n-1) / n * loss_avg + 1 / n * loss.item() / lbl.size(0)
                 
                 _, predicted = torch.max(y.data, 1)
                 total += lbl.size(0)
