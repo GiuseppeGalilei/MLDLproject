@@ -132,7 +132,7 @@ class FedDynClient():
                 y = model(img)
                 loss = self.criterion(y, lbl)
                 n += 1
-                loss_v = (n-1) / n * loss_avg + 1 / n * loss.item()
+                loss_avg = (n-1) / n * loss_avg + 1 / n * loss.item()
 
                 cur_flat = torch.cat([p.reshape(-1) for p in model.parameters()])
                 # Flatten the current server parameters
