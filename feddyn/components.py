@@ -126,8 +126,6 @@ class FedDynClient():
                 img, lbl = img.to(self.device), lbl.to(self.device)
                 y = model(img)
                 loss = self.criterion(y, lbl)
-                n += 1
-                loss_avg = (n-1) / n * loss_avg + 1 / n * loss.item() / lbl.size(0)
                 
                 _, predicted = torch.max(y.data, 1)
                 total += lbl.size(0)
@@ -143,6 +141,10 @@ class FedDynClient():
 
                 loss = loss - lin_penalty + quad_penalty
                 loss.backward()
+                
+                n += 1
+                loss_avg = (n-1) / n * loss_avg + 1 / n * loss.item() / lbl.size(0)
+                
                 torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=self.clip_value)
                 optim.step()
             del img, lbl
