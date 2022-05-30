@@ -10,6 +10,7 @@ g = torch.Generator()
 
 client_dir = "./feddyn/client_states/"
 
+
 class FedDynServer():
     def __init__(self, model, alpha, num_clients, device, testset, seed):
         g.manual_seed(seed)
@@ -36,6 +37,15 @@ class FedDynServer():
         self.criterion = nn.CrossEntropyLoss()
         self.test_loader = DataLoader(testset, batch_size=100, 
             shuffle=False, num_workers=2)
+    
+    def get_model_params_norm(self):
+    """Returns:    total_params_norm: L2-norm of the model parameters"""
+        total_norm = 0
+        for p in self.model.parameters():
+            param_norm = p.data.norm(2)
+            total_norm += param_norm.item() ** 2
+        total_params_norm = total_norm ** 0.5
+        return total_params_norm
 
     def update_model(self, active_clients_states):
         print("Updating server model...", end=" ")
@@ -158,6 +168,15 @@ class FedDynClient():
             torch.save({"prev_grads": prev_grads},
                 client_dir + f"{self.id}.pt")
             
+        total_norm = 0
+        for p in model.parameters():
+            param_norm = p.data.norm(2)
+            total_norm += param_norm.item() ** 2
+        total_params_norm = total_norm ** 0.5
+        print("client model gradient norm: ", total_params_norm)
+        
+        print("previous gradients nan presence: ", torch.isnan(prev_grads).any())
+    
         metrics = {
             "round": round,
             "train_avg_loss_per_image": loss_avg,
