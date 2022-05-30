@@ -74,16 +74,15 @@ class FedDynServer():
         self.model.eval()
         print("Evaluating server model at round", round, "...", end=" ")
         
-        test_loss_avg = 0
-        n = 0
+        test_loss = 0
         correct = 0
         total = 0
         with torch.no_grad():
             for img, lbl in self.test_loader:
                 img, lbl = img.to(self.device), lbl.to(self.device)
                 y = self.model(img)
-                n += 1
-                test_loss_avg = (n-1) / n * test_loss_avg + 1 / n * self.criterion(y, lbl).item() / lbl.size(0)
+                n += lbl.size(0)
+                test_loss += self.criterion(y, lbl).item()
                 _, predicted = torch.max(y.data, 1)
                 total += lbl.size(0)
                 correct += (predicted == lbl).sum().item()
@@ -91,7 +90,7 @@ class FedDynServer():
         metrics = {
             "round": round,
             "test_accuracy": correct / total,
-            "test_avg_loss_per_image": test_loss_avg
+            "test_avg_loss_per_image": test_loss / total
         }
         self.model.train()
         
@@ -152,8 +151,8 @@ class FedDynClient():
                 loss = loss - lin_penalty + quad_penalty
                 loss.backward()
                 
-                n += 1
-                loss_avg = (n-1) / n * loss_avg + 1 / n * loss.item() / lbl.size(0)
+                n += lbl.size(0)
+                loss_avg = loss.item()
                 
                 torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=self.clip_value)
                 optim.step()
@@ -179,9 +178,9 @@ class FedDynClient():
     
         metrics = {
             "round": round,
-            "train_avg_loss_per_image": loss_avg,
+            "train_avg_loss_per_image": loss_avg / n,
             "train_accuracy": correct / total
         }
                     
-        print(f"done! train loss per image={loss_avg}\t train accuracy={correct/total}")
+        print(f"done! train loss per image={loss_avg/n}\t train accuracy={correct/total}")
         return model.state_dict(), metrics
