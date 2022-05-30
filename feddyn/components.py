@@ -2,6 +2,7 @@ import torch
 from torch import nn
 from torch.utils.data import DataLoader
 import os
+from torch.nn.functional import mse_loss
 
 from utils.reproducibility import seed_worker, make_it_reproducible
 from utils.datasets import DatasetSplit
@@ -27,11 +28,9 @@ class FedDynServer():
 
         if not os.path.exists(client_dir):
             os.mkdir(client_dir)
-        
-        pg = torch.cat([param.reshape(-1) for param in self.model.parameters()])
 
         for i in range(num_clients):
-            torch.save({"prev_grads": pg},
+            torch.save({"prev_grads": self.h},
                 client_dir + f"{i}.pt")
 
         self.criterion = nn.CrossEntropyLoss()
@@ -39,7 +38,6 @@ class FedDynServer():
             shuffle=False, num_workers=2)
     
     def get_model_params_norm(self):
-    """Returns:    total_params_norm: L2-norm of the model parameters"""
         total_norm = 0
         for p in self.model.parameters():
             param_norm = p.data.norm(2)
@@ -67,8 +65,9 @@ class FedDynServer():
         }
             
         self.model.load_state_dict(par)
-            
         print("done!")
+        
+        print(f"Server model norm: {self.get_model_params_norm()}")
 
     def evaluate(self, round):
         self.model.eval()
@@ -112,12 +111,12 @@ class FedDynClient():
         self.local_epochs = local_epochs
         self.clip_value = clip_value
 
-        self.criterion = nn.CrossEntropyLoss()
+        self.criterion = nn.CrossEntropyLoss(reduction="sum")
         self.train_loader = DataLoader(DatasetSplit(trainset, data_idxs), batch_size=128,
             num_workers=2, worker_init_fn=seed_worker, generator=g)
 
     def train(self, model, server_state_dict, round):
-        print("Training client", self.id, "...", end=" ")
+        print("Training client", self.id, "...")
 
         prev_grads = torch.load(client_dir + f"{self.id}.pt")["prev_grads"]
         model.load_state_dict(server_state_dict)
@@ -125,8 +124,7 @@ class FedDynClient():
         optim = torch.optim.SGD(model.parameters(), lr=self.lr, weight_decay=self.wd, momentum=self.mm)
         model.train()
 
-        loss_avg = 0
-        n = 0
+        loss_value = 0
         correct = 0
         total = 0
         for epoch in range(self.local_epochs):
@@ -140,30 +138,24 @@ class FedDynClient():
                 total += lbl.size(0)
                 correct += (predicted == lbl).sum().item()
 
-                cur_flat = torch.cat([p.reshape(-1) for p in model.parameters()])
-                # Flatten the current server parameters
-                par_flat = torch.cat([p.reshape(-1) for k, p in server_state_dict.items() if k in [k1 for k1, v in model.named_parameters()] ])
-                #assert(cur_flat.requires_grad)
-
-                lin_penalty = torch.sum(prev_grads * cur_flat)
-                quad_penalty = self.alpha / 2 * torch.linalg.norm((cur_flat - par_flat), 2)**2
-
-                loss = loss - lin_penalty + quad_penalty
-                loss.backward()
+                for key in model.state_dict().keys():
+                     lin_penalty += torch.sum(prev_grads[key] * self.model.state_dict()[key])
+                     quad_penalty += F.mse_loss(model.state_dict()[key], server_state_dict()[key], reduction='sum')
                 
-                n += lbl.size(0)
-                loss_avg = loss.item()
+                print(f"\t loss:{loss.item()}, lin:{lin_penalty}, quad:{quad_penalty}")
+                    
+                loss -= lin_penalty
+                loss += self.alpha / 2. * quad_penalty
+                loss.backward()
+                loss_value = loss.item()
                 
                 torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=self.clip_value)
                 optim.step()
             del img, lbl
 
-        with torch.no_grad():  
-            cur_flat = torch.cat([p.detach().reshape(-1) for p in model.parameters()])
-            
-            print(prev_grads.size())
-
-            prev_grads -= self.alpha * (cur_flat - par_flat)
+        with torch.no_grad():
+            for key in model.state_dict():
+                prev_grad[key] -= self.alpha * (model.state_dict()[key] - server_state_dict[key])
             torch.save({"prev_grads": prev_grads},
                 client_dir + f"{self.id}.pt")
             
@@ -172,15 +164,15 @@ class FedDynClient():
             param_norm = p.data.norm(2)
             total_norm += param_norm.item() ** 2
         total_params_norm = total_norm ** 0.5
-        print("client model gradient norm: ", total_params_norm)
         
-        print("previous gradients nan presence: ", torch.isnan(prev_grads).any())
+        print("\t client model gradient norm: ", total_params_norm)
+        print("\t previous gradients nan presence: ", torch.isnan(prev_grads).any())
     
         metrics = {
             "round": round,
-            "train_avg_loss_per_image": loss_avg / n,
+            "train_avg_loss_per_image": loss_value / n,
             "train_accuracy": correct / total
         }
                     
-        print(f"done! train loss per image={loss_avg/n}\t train accuracy={correct/total}")
+        print(f"done! train loss per image={loss_value / total}\t train accuracy={correct / total}")
         return model.state_dict(), metrics
