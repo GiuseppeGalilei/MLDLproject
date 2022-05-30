@@ -149,6 +149,8 @@ class FedDynClient():
 
         with torch.no_grad():  
             cur_flat = torch.cat([p.detach().reshape(-1) for p in model.parameters()])
+            
+            print(prev_grads.size())
 
             prev_grads -= self.alpha * (cur_flat - par_flat)
             torch.save({"prev_grads": prev_grads},
