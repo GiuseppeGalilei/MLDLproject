@@ -66,8 +66,16 @@ class FedDynServer():
             
         self.model.load_state_dict(par)
         print("done!")
+
+        hasnan = False
+        for key in self.model.state_dict():
+            if torch.isnan(self.model.state_dict()[key]).any():
+                print(f"\t CLient model: {key} has some nan.")
+                hasnan = True
+        if not hasnan:
+            print("\t No nan found in server model!")
         
-        print(f"Server model norm: {self.get_model_params_norm()}")
+        print(f"\t Server model norm: {self.get_model_params_norm()}")
 
     def evaluate(self, round):
         self.model.eval()
@@ -80,7 +88,6 @@ class FedDynServer():
             for img, lbl in self.test_loader:
                 img, lbl = img.to(self.device), lbl.to(self.device)
                 y = self.model(img)
-                n += lbl.size(0)
                 test_loss += self.criterion(y, lbl).item()
                 _, predicted = torch.max(y.data, 1)
                 total += lbl.size(0)
@@ -138,16 +145,20 @@ class FedDynClient():
                 total += lbl.size(0)
                 correct += (predicted == lbl).sum().item()
 
+                lin_penalty = 0
+                quad_penalty = 0
                 for key in model.state_dict().keys():
-                     lin_penalty += torch.sum(prev_grads[key] * self.model.state_dict()[key])
-                     quad_penalty += F.mse_loss(model.state_dict()[key], server_state_dict()[key], reduction='sum')
+                     lin_penalty += torch.sum(prev_grads[key] * model.state_dict()[key])
+                     quad_penalty += mse_loss(model.state_dict()[key].type(torch.DoubleTensor), server_state_dict[key].type(torch.DoubleTensor), reduction='sum')
                 
-                print(f"\t loss:{loss.item()}, lin:{lin_penalty}, quad:{quad_penalty}")
+                print(f"\t loss:{loss.item()}, lin:{lin_penalty}, quad:{quad_penalty}", end="")
                     
                 loss -= lin_penalty
                 loss += self.alpha / 2. * quad_penalty
                 loss.backward()
-                loss_value = loss.item()
+                print(f", modified loss:{loss.item()}")
+                
+                loss_value += loss.item()
                 
                 torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=self.clip_value)
                 optim.step()
@@ -155,7 +166,10 @@ class FedDynClient():
 
         with torch.no_grad():
             for key in model.state_dict():
-                prev_grad[key] -= self.alpha * (model.state_dict()[key] - server_state_dict[key])
+                if prev_grads[key].dtype != torch.float32:
+                    prev_grads[key] -= (self.alpha * (model.state_dict()[key] - server_state_dict[key])).long()
+                else:
+                    prev_grads[key] -= self.alpha * (model.state_dict()[key] - server_state_dict[key])
             torch.save({"prev_grads": prev_grads},
                 client_dir + f"{self.id}.pt")
             
@@ -165,14 +179,29 @@ class FedDynClient():
             total_norm += param_norm.item() ** 2
         total_params_norm = total_norm ** 0.5
         
-        print("\t client model gradient norm: ", total_params_norm)
-        print("\t previous gradients nan presence: ", torch.isnan(prev_grads).any())
+        print("\t Client model norm: ", total_params_norm)
+
+        hasnan = False
+        for key in prev_grads:
+            if torch.isnan(prev_grads[key]).any():
+                print(f"\t Client state: {key} has some nan.")
+                hasnan = True
+        if not hasnan:
+            print("\t No nan found in client state!")
+
+        hasnan = False
+        for key in model.state_dict():
+            if torch.isnan(model.state_dict()[key]).any():
+                print(f"\t Client model: {key} has some nan.")
+                hasnan = True
+        if not hasnan:
+            print("\t No nan found in client model!")
     
         metrics = {
             "round": round,
-            "train_avg_loss_per_image": loss_value / n,
+            "train_avg_loss_per_image": loss.item() / total,
             "train_accuracy": correct / total
         }
                     
-        print(f"done! train loss per image={loss_value / total}\t train accuracy={correct / total}")
+        print(f"done! train loss per image={loss.item() / total}\t train accuracy={correct / total}")
         return model.state_dict(), metrics
