@@ -33,7 +33,7 @@ class FedDynServer():
             torch.save({"prev_grads": self.h},
                 client_dir + f"{i}.pt")
 
-        self.criterion = nn.CrossEntropyLoss()
+        self.criterion = nn.CrossEntropyLoss(reduction="sum")
         self.test_loader = DataLoader(testset, batch_size=100, 
             shuffle=False, num_workers=2)
     
