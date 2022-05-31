@@ -199,9 +199,9 @@ class FedDynClient():
     
         metrics = {
             "round": round,
-            "train_avg_loss_per_image": loss.item() / total,
+            "train_avg_loss_per_image": loss_value / total,
             "train_accuracy": correct / total
         }
                     
-        print(f"done! train loss per image={loss.item() / total}\t train accuracy={correct / total}")
+        print(f"done! train loss per image={loss_value / total}\t train accuracy={correct / total}")
         return model.state_dict(), metrics
