@@ -116,6 +116,7 @@ class DYNClient():
         
         model.train()
         for epoch in range(self.local_epochs):
+            print(f"{epoch}", end="")
             for img, lbl in trainld:
                 if self.cuda:
                     img, lbl = img.cuda(), lbl.cuda()
@@ -126,6 +127,7 @@ class DYNClient():
 
                 lin_penalty, quad_penalty = 0, 0
                 for key in model.state_dict():
+                    print(prev_status[key].shape, model.state_dict()[key].shape)
                     lin_penalty += prev_status[key] * model.state_dict()[key]
                     quad_penalty += F.mse_loss(model.state_dict()[key], server_state_dict[key], reduction="sum")
 
@@ -146,6 +148,6 @@ class DYNClient():
         }
         torch.save(prev_status, clients_status_dir + f"{self.cid}.pt")
         
-        print(f"done!\t avg_accuracy={(correct / total):.3} avg_loss={(loss_value / total):.3}")
+        print(f" done!\t avg_accuracy={(correct / total):.3} avg_loss={(loss_value / total):.3}")
         
         return model.state_dict()
