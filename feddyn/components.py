@@ -145,7 +145,7 @@ class DYNClient():
             key: prev_status[key] - self.alpha * (model.state_dict()[key] - server_state_dict[key])
             for key in prev_status
         }
-        torch.save(prev_status, clients_status_dir + f"{self.cid}.pt")
+        torch.save({"prev_state": prev_status}, clients_status_dir + f"{self.cid}.pt")
         
         print(f" done!\t avg_accuracy={(correct / total):.3} avg_loss={(loss.item() / total):.3}")
         
