@@ -105,6 +105,15 @@ class DYNClient():
         prev_status = torch.load(clients_status_dir + f"{self.cid}.pt")["prev_state"]
         trainld = DataLoader(DatasetSplit(trainset, self.data_idxs), batch_size=128, shuffle=True,
                              num_workers=2, worker_init_fn=seed_worker, generator=g)
+        
+        prev_grads = None
+        for key in prev_status:
+            if not isinstance(local_par_list, torch.Tensor):
+                prev_grads = prev_status[key].reshape(-1)
+            else:
+                prev_grads = torch.cat((local_par_list, prev_status[key].reshape(-1)), 0)
+        
+        
         if self.cuda:
             model.cuda()
             
@@ -121,17 +130,35 @@ class DYNClient():
 
                 optimizer.zero_grad()
                 lblhat = model(img)
-                loss = criterion(lblhat, lbl)
+                loss_fi = criterion(lblhat, lbl)
+                loss_f_i = loss_f_i / lbl.size(0)
 
-                lin_penalty, quad_penalty = 0, 0
-                for key in model.state_dict():
-                    lin_penalty += torch.sum(prev_status[key] * model.state_dict()[key])
-                    quad_penalty += F.mse_loss(model.state_dict()[key].type(torch.float32), 
-                                               server_state_dict[key].type(torch.float32), reduction="sum")
-                print(f"loss={loss.item()}, lin_penalty={lin_penalty}, quad_penalty={quad_penalty}, ", end="")
-                loss -= lin_penalty
-                loss += self.alpha / 2 * quad_penalty
-                print(f"modified_loss={loss.item()}")
+#                 lin_penalty, quad_penalty = 0, 0
+#                 for key in model.state_dict():
+#                     lin_penalty += torch.sum(prev_status[key] * model.state_dict()[key])
+#                     quad_penalty += F.mse_loss(model.state_dict()[key].type(torch.float32), 
+#                                                server_state_dict[key].type(torch.float32), reduction="sum")
+#                 print(f"loss={loss.item()}, lin_penalty={lin_penalty}, quad_penalty={quad_penalty}, ", end="")
+#                 loss -= lin_penalty
+#                 loss += self.alpha / 2 * quad_penalty
+#                 print(f"modified_loss={loss.item()}")
+
+
+                local_par_list = None
+                for param in model.parameters():
+                    if not isinstance(local_par_list, torch.Tensor):
+                        local_par_list = param.reshape(-1)
+                    else:
+                        local_par_list = torch.cat((local_par_list, param.reshape(-1)), 0)
+                server_par_list = None
+                for key in server_state_dict:
+                    if not isinstance(local_par_list, torch.Tensor):
+                        server_par_list = server_state_dict[key].reshape(-1)
+                    else:
+                        server_par_list = torch.cat((local_par_list, server_state_dict[key].reshape(-1)), 0)
+                
+                loss_algo = self.alpha * torch.sum(local_par_list * (-server_par_list + prev_grads))
+                loss = loss_f_i + loss_algo
 
                 loss.backward()
                 optimizer.step()
