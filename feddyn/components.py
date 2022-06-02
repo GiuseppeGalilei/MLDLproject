@@ -51,7 +51,7 @@ class DYNServer():
         }
         
         params = {
-            key: sum(client_model[key] for client_model in active_clients_models) / num_participants - self.h[key] / self.alpha
+            key: sum(client_model[key] for client_model in active_devices_models) / num_participants - self.h[key] / self.alpha
             for key in self.h
         }
         
