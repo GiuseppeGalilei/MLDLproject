@@ -46,7 +46,7 @@ class DYNServer():
         num_participants = len(active_devices_models)
         
         self.h = {
-            key: self.h[key] - self.alpha / self.tot_clients * sum(client_model[key] - self.model.state_dicct()[key] for client_model in active_devices_models)
+            key: self.h[key] - self.alpha / self.tot_clients * sum(client_model[key] - self.model.state_dict()[key] for client_model in active_devices_models)
             for key in self.h
         }
         
