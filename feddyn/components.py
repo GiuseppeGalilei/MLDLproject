@@ -67,7 +67,7 @@ class DYNServer():
         loss_value, correct, total = 0, 0, 0
         
         self.model.eval()
-        for img, lbl in testld:
+        for img, lbl in self.testld:
             if self.cuda:
                 img, lbl = img.cuda(), lbl.cuda()
             lblhat = self.model(img)
