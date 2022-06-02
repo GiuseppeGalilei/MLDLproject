@@ -127,9 +127,9 @@ class DYNClient():
                 lin_penalty, quad_penalty = 0, 0
                 for key in model.state_dict():
                     lin_penalty += prev_status[key] * model.state_dict()[key]
-                    quad_penalty += F.mse_loss(model.state_dict()[key] - server_state_dict[key])
+                    quad_penalty += F.mse_loss(model.state_dict()[key], server_state_dict[key], reduction="sum")
 
-                loss = loss - lin_penalty + quad_penalty
+                loss = loss - lin_penalty + self.alpha / 2 * quad_penalty
                 loss_value += loss.item()
 
                 loss.backward()
