@@ -115,7 +115,6 @@ class DYNClient():
         
         model.train()
         for epoch in range(self.local_epochs):
-            print(f"{epoch}", end="")
             for img, lbl in trainld:
                 if self.cuda:
                     img, lbl = img.cuda(), lbl.cuda()
@@ -129,9 +128,10 @@ class DYNClient():
                     lin_penalty += torch.sum(prev_status[key] * model.state_dict()[key])
                     quad_penalty += F.mse_loss(model.state_dict()[key].type(torch.float32), 
                                                server_state_dict[key].type(torch.float32), reduction="sum")
-
+                print(f"loss={loss.item()}, lin_penalty={lin_penalty}, quad_penalty={quad_penalty}, ", end="")
                 loss -= lin_penalty
                 loss += self.alpha / 2 * quad_penalty
+                print(f"modified_loss={loss.item()}")
 
                 loss.backward()
                 optimizer.step()
