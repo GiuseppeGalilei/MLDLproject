@@ -73,14 +73,13 @@ class DYNServer():
             lblhat = self.model(img)
             
             loss = criterion(lblhat, lbl)
-            loss_value += loss.item()
             
             _, predicted = torch.max(lblhat.data, 1)
             total += lbl.size(0)
             correct += (predicted == lbl).sum().item()
         self.model.train()
         
-        print(f"done!\t accuracy={(correct / total):.3} loss={(loss_value / total):.3}")
+        print(f"done!\t accuracy={(correct / total):.3} loss={(loss.item() / total):.3}")
         
     def get_state_dict(self):
         return self.model.state_dict()
@@ -127,12 +126,12 @@ class DYNClient():
 
                 lin_penalty, quad_penalty = 0, 0
                 for key in model.state_dict():
-                    print(prev_status[key].shape, model.state_dict()[key].shape)
-                    lin_penalty += prev_status[key] * model.state_dict()[key]
-                    quad_penalty += F.mse_loss(model.state_dict()[key], server_state_dict[key], reduction="sum")
+                    lin_penalty += torch.sum(prev_status[key] * model.state_dict()[key])
+                    quad_penalty += F.mse_loss(model.state_dict()[key].type(torch.float32), 
+                                               server_state_dict[key].type(torch.float32), reduction="sum")
 
-                loss = loss - lin_penalty + self.alpha / 2 * quad_penalty
-                loss_value += loss.item()
+                loss -= lin_penalty
+                loss += self.alpha / 2 * quad_penalty
 
                 loss.backward()
                 optimizer.step()
@@ -148,6 +147,6 @@ class DYNClient():
         }
         torch.save(prev_status, clients_status_dir + f"{self.cid}.pt")
         
-        print(f" done!\t avg_accuracy={(correct / total):.3} avg_loss={(loss_value / total):.3}")
+        print(f" done!\t avg_accuracy={(correct / total):.3} avg_loss={(loss.item() / total):.3}")
         
         return model.state_dict()
