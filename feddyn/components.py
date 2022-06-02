@@ -103,7 +103,7 @@ class DYNClient():
         print(f"Training client {self.cid} @ round {com_round}...", end=" ")
         
         model.load_state_dict(server_state_dict)
-        prev_status = torch.load(clients_status_dir + f"{self.cid}.pt")
+        prev_status = torch.load(clients_status_dir + f"{self.cid}.pt")["prev_state"]
         trainld = DataLoader(DatasetSplit(trainset, self.data_idxs), batch_size=128, shuffle=True,
                              num_workers=2, worker_init_fn=seed_worker, generator=g)
         if self.cuda:
