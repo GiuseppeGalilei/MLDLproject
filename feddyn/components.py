@@ -70,8 +70,8 @@ class DYNServer():
         for img, lbl in self.testld:
             if self.cuda:
                 img, lbl = img.cuda(), lbl.cuda()
-#             lblhat, _ = self.model(img)
-            lblhat = self.model(img)
+            lblhat, _ = self.model(img)
+            # lblhat = self.model(img)
             
             loss = criterion(lblhat, lbl)
             
@@ -105,6 +105,9 @@ class DYNClient():
         self.local_epochs = local_epochs
         self.data_idxs = data_idxs
         self.cuda = cuda
+
+    def set_lr(self, lr):
+        self.lr = lr
         
     def train(self, model, trainset, server_state_dict, com_round):
         print(f"Training client {self.cid} @ round {com_round}...", end=" ")
@@ -129,16 +132,16 @@ class DYNClient():
                     img, lbl = img.cuda(), lbl.cuda()
 
                 optimizer.zero_grad()
-#                 lblhat, _ = model(img)
-                lblhat = model(img)
+                lblhat, _ = model(img)
+                # lblhat = model(img)
                 loss = criterion(lblhat, lbl)
 
                 lin_penalty, quad_penalty = 0, 0
                 for key in model.state_dict():
-#                     if key in [ k for k, v in model.named_parameters()]:
-                    lin_penalty += torch.sum(prev_status[key] * model.state_dict()[key])
-                    quad_penalty += F.mse_loss(model.state_dict()[key].type(torch.float32), 
-                                               server_state_dict[key].type(torch.float32), reduction="sum")
+                    if key in [ k for k, v in model.named_parameters()]:
+                        lin_penalty += torch.sum(prev_status[key] * model.state_dict()[key])
+                        quad_penalty += F.mse_loss(model.state_dict()[key].type(torch.float32), 
+                                                server_state_dict[key].type(torch.float32), reduction="sum")
 #                 print(f"loss={loss.item()}, lin_penalty={lin_penalty}, quad_penalty={quad_penalty}, ", end="")
                 loss -= lin_penalty
                 loss += self.alpha / 2 * quad_penalty
