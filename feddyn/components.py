@@ -106,12 +106,12 @@ class DYNClient():
         trainld = DataLoader(DatasetSplit(trainset, self.data_idxs), batch_size=128, shuffle=True,
                              num_workers=2, worker_init_fn=seed_worker, generator=g)
         
-        prev_grads = None
-        for key in prev_status:
-            if not isinstance(local_par_list, torch.Tensor):
-                prev_grads = prev_status[key].reshape(-1)
-            else:
-                prev_grads = torch.cat((local_par_list, prev_status[key].reshape(-1)), 0)
+#         prev_grads = None
+#         for key in prev_status:
+#             if not isinstance(local_par_list, torch.Tensor):
+#                 prev_grads = prev_status[key].reshape(-1)
+#             else:
+#                 prev_grads = torch.cat((local_par_list, prev_status[key].reshape(-1)), 0)
         
         
         if self.cuda:
