@@ -3,24 +3,29 @@ Based on the implementation in https://github.com/AshwinRJ/Federated-Learning-Py
 """
 
 import numpy as np
-from torchvision import datasets, transforms
 
 
-def cifar_iid(dataset, num_users):
+def _cifar_iid(dataset, num_users):
     num_items = int(len(dataset)/num_users)
     dict_users, all_idxs = {}, [i for i in range(len(dataset))]
+    dict_users_cls_count = {i: [0 for _ in range(10)] for i in range(num_users)}
+    targets = dataset.targets
     for i in range(num_users):
         dict_users[i] = set(np.random.choice(all_idxs, num_items, replace=False))
         all_idxs = list(set(all_idxs) - dict_users[i])
-    return dict_users
+        for e in dict_users[i]:
+            dict_users_cls_count[i][targets[e]] += 1
+    return dict_users, dict_users_cls_count
 
 
-def cifar_noniid(dataset, num_users):
+def _cifar_noniid(dataset, num_users):
     num_shards, num_imgs = 200, 250
     idx_shard = [i for i in range(num_shards)]
     dict_users = {i: np.array([]) for i in range(num_users)}
     idxs = np.arange(num_shards*num_imgs)
     labels = np.array(dataset.targets)
+    targets = dataset.targets
+    dict_users_cls_count = {i: [0 for _ in range(10)] for i in range(num_users)}
 
     idxs_labels = np.vstack((idxs, labels))
     idxs_labels = idxs_labels[:, idxs_labels[1, :].argsort()]
@@ -31,15 +36,19 @@ def cifar_noniid(dataset, num_users):
         idx_shard = list(set(idx_shard) - rand_set)
         for rand in rand_set:
             dict_users[i] = np.concatenate((dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
-    return dict_users
+        for e in dict_users[i]:
+            dict_users_cls_count[i][targets[e.astype(int)]] += 1
+    return dict_users, dict_users_cls_count
 
 
-def cifar_noniid_unbalanced(dataset, num_users):
-    num_shards, num_imgs = 1000, 50
+def _cifar_noniid_unbalanced(dataset, num_users):
+    num_shards, num_imgs = 200, 250
     idx_shard = [i for i in range(num_shards)]
     dict_users = {i: np.array([]) for i in range(num_users)}
     idxs = np.arange(num_shards*num_imgs)
     labels = np.array(dataset.targets)
+    targets = dataset.targets
+    dict_users_cls_count = {i: [0 for _ in range(10)] for i in range(num_users)}
 
     idxs_labels = np.vstack((idxs, labels))
     idxs_labels = idxs_labels[:, idxs_labels[1, :].argsort()]
@@ -51,6 +60,20 @@ def cifar_noniid_unbalanced(dataset, num_users):
     random_shard_size = np.random.randint(min_shard, max_shard+1, size=num_users)
     random_shard_size = np.around(random_shard_size / sum(random_shard_size) * num_shards)
     random_shard_size = random_shard_size.astype(int)
+    
+    sizes = random_shard_size.tolist()
+    cnt = 0
+    for i in range(len(sizes)):
+        if sizes[i] == 0:
+            sizes[i] = 1
+            cnt += 1
+    while cnt > 0:
+        i = np.random.randint(num_users)
+        if sizes[i] > 1:
+            sizes[i] -= 1
+            cnt -= 1
+            
+    random_shard_size = np.array(sizes)
 
     if sum(random_shard_size) > num_shards:
         for i in range(num_users):
@@ -88,5 +111,22 @@ def cifar_noniid_unbalanced(dataset, num_users):
             idx_shard = list(set(idx_shard) - rand_set)
             for rand in rand_set:
                 dict_users[k] = np.concatenate((dict_users[k], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
+                
+    for i in range(num_users):
+        for e in dict_users[i]:
+            dict_users_cls_count[i][targets[e.astype(int)]] += 1
 
-    return dict_users
+    return dict_users, dict_users_cls_count
+
+
+def get_user_groups(dataset, iid=True, unbalanced=False, tot_users=100):
+    user_groups = None
+    if iid:
+        user_groups, dict_user_cls_count = _cifar_iid(dataset, tot_users)
+    else:
+        if unbalanced:
+            user_groups, dict_user_cls_count = _cifar_noniid_unbalanced(dataset, tot_users)
+        else:
+            user_groups, dict_user_cls_count = _cifar_noniid(dataset, tot_users)
+
+    return user_groups, dict_user_cls_count
