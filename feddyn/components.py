@@ -70,7 +70,7 @@ class DYNServer():
         for img, lbl in self.testld:
             if self.cuda:
                 img, lbl = img.cuda(), lbl.cuda()
-            lblhat = self.model(img)
+            lblhat, _ = self.model(img)
             
             loss = criterion(lblhat, lbl)
             
@@ -129,36 +129,35 @@ class DYNClient():
                     img, lbl = img.cuda(), lbl.cuda()
 
                 optimizer.zero_grad()
-                lblhat = model(img)
-                loss_fi = criterion(lblhat, lbl)
-                loss_f_i = loss_f_i / lbl.size(0)
+                lblhat, _ = model(img)
+                loss = criterion(lblhat, lbl)
 
-#                 lin_penalty, quad_penalty = 0, 0
-#                 for key in model.state_dict():
-#                     lin_penalty += torch.sum(prev_status[key] * model.state_dict()[key])
-#                     quad_penalty += F.mse_loss(model.state_dict()[key].type(torch.float32), 
-#                                                server_state_dict[key].type(torch.float32), reduction="sum")
-#                 print(f"loss={loss.item()}, lin_penalty={lin_penalty}, quad_penalty={quad_penalty}, ", end="")
-#                 loss -= lin_penalty
-#                 loss += self.alpha / 2 * quad_penalty
-#                 print(f"modified_loss={loss.item()}")
+                lin_penalty, quad_penalty = 0, 0
+                for key in model.state_dict():
+                    lin_penalty += torch.sum(prev_status[key] * model.state_dict()[key])
+                    quad_penalty += F.mse_loss(model.state_dict()[key].type(torch.float32), 
+                                               server_state_dict[key].type(torch.float32), reduction="sum")
+                print(f"loss={loss.item()}, lin_penalty={lin_penalty}, quad_penalty={quad_penalty}, ", end="")
+                loss -= lin_penalty
+                loss += self.alpha / 2 * quad_penalty
+                print(f"modified_loss={loss.item()}")
 
 
-                local_par_list = None
-                for param in model.parameters():
-                    if not isinstance(local_par_list, torch.Tensor):
-                        local_par_list = param.reshape(-1)
-                    else:
-                        local_par_list = torch.cat((local_par_list, param.reshape(-1)), 0)
-                server_par_list = None
-                for key in server_state_dict:
-                    if not isinstance(local_par_list, torch.Tensor):
-                        server_par_list = server_state_dict[key].reshape(-1)
-                    else:
-                        server_par_list = torch.cat((local_par_list, server_state_dict[key].reshape(-1)), 0)
+#                 local_par_list = None
+#                 for param in model.parameters():
+#                     if not isinstance(local_par_list, torch.Tensor):
+#                         local_par_list = param.reshape(-1)
+#                     else:
+#                         local_par_list = torch.cat((local_par_list, param.reshape(-1)), 0)
+#                 server_par_list = None
+#                 for key in server_state_dict:
+#                     if not isinstance(local_par_list, torch.Tensor):
+#                         server_par_list = server_state_dict[key].reshape(-1)
+#                     else:
+#                         server_par_list = torch.cat((local_par_list, server_state_dict[key].reshape(-1)), 0)
                 
-                loss_algo = self.alpha * torch.sum(local_par_list * (-server_par_list + prev_grads))
-                loss = loss_f_i + loss_algo
+#                 loss_algo = self.alpha * torch.sum(local_par_list * (-server_par_list + prev_grads))
+#                 loss = loss_f_i + loss_algo
 
                 loss.backward()
                 optimizer.step()
