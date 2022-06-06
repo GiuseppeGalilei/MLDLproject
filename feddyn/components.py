@@ -135,10 +135,10 @@ class DYNClient():
 
                 lin_penalty, quad_penalty = 0, 0
                 for key in model.state_dict():
-                    if key in [ k for k, v in model.named_parameters()]:
-                        lin_penalty += torch.sum(prev_status[key] * model.state_dict()[key])
-                        quad_penalty += F.mse_loss(model.state_dict()[key].type(torch.float32), 
-                                                   server_state_dict[key].type(torch.float32), reduction="sum")
+#                     if key in [ k for k, v in model.named_parameters()]:
+                    lin_penalty += torch.sum(prev_status[key] * model.state_dict()[key])
+                    quad_penalty += F.mse_loss(model.state_dict()[key].type(torch.float32), 
+                                               server_state_dict[key].type(torch.float32), reduction="sum")
 #                 print(f"loss={loss.item()}, lin_penalty={lin_penalty}, quad_penalty={quad_penalty}, ", end="")
                 loss -= lin_penalty
                 loss += self.alpha / 2 * quad_penalty
