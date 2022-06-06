@@ -70,8 +70,8 @@ class DYNServer():
         for img, lbl in self.testld:
             if self.cuda:
                 img, lbl = img.cuda(), lbl.cuda()
-            lblhat, _ = self.model(img)
-            # lblhat = self.model(img)
+#             lblhat, _ = self.model(img)
+            lblhat = self.model(img)
             
             loss = criterion(lblhat, lbl)
             
@@ -132,8 +132,8 @@ class DYNClient():
                     img, lbl = img.cuda(), lbl.cuda()
 
                 optimizer.zero_grad()
-                lblhat, _ = model(img)
-                # lblhat = model(img)
+#                 lblhat, _ = model(img)
+                lblhat = model(img)
                 loss = criterion(lblhat, lbl)
 
                 lin_penalty, quad_penalty = 0, 0
