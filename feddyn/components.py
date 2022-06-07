@@ -111,6 +111,9 @@ class FedDynClient():
         self.criterion = nn.CrossEntropyLoss(reduction="sum")
         self.train_loader = DataLoader(DatasetSplit(trainset, data_idxs), batch_size=50,
             num_workers=2, worker_init_fn=seed_worker, generator=g)
+        
+    def set_lr(self, lr):
+        self.lr = lr
 
     def train(self, model, server_state_dict, round):
         print("Training client", self.id, "...", end=" ")
