@@ -109,7 +109,7 @@ class FedDynClient():
         self.clip_value = clip_value
 
         self.criterion = nn.CrossEntropyLoss(reduction="sum")
-        self.train_loader = DataLoader(DatasetSplit(trainset, data_idxs), batch_size=50,
+        self.train_loader = DataLoader(DatasetSplit(trainset, data_idxs), batch_size=128,
             num_workers=2, worker_init_fn=seed_worker, generator=g)
         
     def set_lr(self, lr):
