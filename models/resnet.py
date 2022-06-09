@@ -1,11 +1,9 @@
 """
 ResNet with batch normalization layers.
 From 'Deep Residual Learning for Image Recognition' by Kaiming et al.
-
 This version has in the first convolutional layer a kernel size of 3 instead of 7 to deal better with CIFAR-10.
 We added the option to set the normalization layer type by passing an argument when calling ResNet50.
 """
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -16,6 +14,35 @@ def Norm(planes, type, num_groups=2):
         return nn.BatchNorm2d(planes)
     elif type == 'Group Norm':
         return nn.GroupNorm(num_groups, planes)
+
+
+class BasicBlock(nn.Module):
+    expansion = 1
+
+    def __init__(self, in_planes, planes, stride=1, norm_type="Batch Norm"):
+        super().__init__()
+        self.conv1 = nn.Conv2d(in_planes, planes, kernel_size=3, bias=False)
+        self.bn1 = Norm(planes, norm_type)
+        self.conv2 = nn.Conv2d(planes, self.expansion * planes, kernel_size=3, bias=False)
+        self.bn2 = Norm(self.expansion * planes, norm_type)
+
+        self.shortcut = nn.Sequential()
+        if stride != 1 or in_planes != self.expansion*planes:
+            self.shortcut = nn.Sequential(
+                nn.Conv2d(in_planes, self.expansion*planes,
+                          kernel_size=1, stride=stride, bias=False),
+                Norm(self.expansion*planes, norm_type)
+            )
+
+    def forward(self, x):
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+        out = self.conv2(out)
+        out = self.bn2(out)
+        out += self.shortcut(x)
+        out = self.relu(out)
+        return out
 
 
 class Bottleneck(nn.Module):
@@ -64,6 +91,19 @@ class ResNet(nn.Module):
         self.layer4 = self._make_layer(block, 512, num_blocks[3], stride=2, norm_type=norm_type)
         self.linear = nn.Linear(512*block.expansion, num_classes)
 
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(m.weight, mode="fan_out", nonlinearity="relu")
+            elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
+                
+        for m in self.modules():
+            if isinstance(m, Bottleneck) and m.bn3.weight is not None:
+                nn.init.constant_(m.bn3.weight, 0)  # type: ignore[arg-type]
+            elif isinstance(m, BasicBlock) and m.bn2.weight is not None:
+                nn.init.constant_(m.bn2.weight, 0)  # type: ignore[arg-type]
+
     def _make_layer(self, block, planes, num_blocks, stride, norm_type):
         strides = [stride] + [1]*(num_blocks-1)
         layers = []
@@ -82,6 +122,10 @@ class ResNet(nn.Module):
         out = out.view(out.size(0), -1)
         out = self.linear(out)
         return out
+
+
+def ResNet18(norm_type="Norm Type"):
+    return ResNet(BasicBlock, [2, 2, 2, 2], norm_type=norm_type)
 
 
 def ResNet50(norm_type="Batch Norm"):
