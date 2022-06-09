@@ -20,7 +20,7 @@ class Basicblock(nn.Module):
     expansion = 1
 
     def __init__(self, in_planes, planes, stride=1, norm_type="Batch Norm"):
-        super(BasicBlock, self).__init__()
+        super(Basicblock, self).__init__()
         self.conv1 = nn.Conv2d(
             in_planes, planes, kernel_size=3, stride=stride, padding=1, bias=False)
         self.bn1 = Norm(planes, type=norm_type)
