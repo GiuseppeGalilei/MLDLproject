@@ -141,9 +141,9 @@ class FedDynClient():
                 lin_penalty = 0
                 quad_penalty = 0
                 for key in model.state_dict().keys():
-                    # if key in [k for k, _ in model.named_parameters()]:
-                    lin_penalty += torch.sum(prev_grads[key] * model.state_dict()[key])
-                    quad_penalty += mse_loss(model.state_dict()[key].type(torch.DoubleTensor), server_state_dict[key].type(torch.DoubleTensor), reduction='sum')
+                    if key in [k for k, _ in model.named_parameters()]:
+                        lin_penalty += torch.sum(prev_grads[key] * model.state_dict()[key])
+                        quad_penalty += mse_loss(model.state_dict()[key].type(torch.DoubleTensor), server_state_dict[key].type(torch.DoubleTensor), reduction='sum')
                 
                 # print(f"\t loss:{loss.item()}, lin:{lin_penalty}, quad:{quad_penalty}", end="")
                     
