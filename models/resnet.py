@@ -110,7 +110,11 @@ class ResNet(nn.Module):
 
 
 def ResNet18(norm_type="Batch Norm"):
-    return ResNet(Basicblock, [2, 2, 2, 2], norm_type)
+    return ResNet(Basicblock, [2, 2, 2, 2], norm_type=norm_type)
+
+
+def ResNet38(norm_type="Batch Norm"):
+    return ResNet(Bottleneck, [2, 3, 5, 2], norm_type=norm_type)
 
 
 def ResNet50(norm_type="Batch Norm"):
