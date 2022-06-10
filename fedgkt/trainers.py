@@ -50,7 +50,6 @@ class GKTServerTrainer(object):
         self.train_metrics_list = []
         self.test_metrics_list = []
 
-        make_it_reproducible(seed)
         g.manual_seed(seed)
 
     def add_local_trained_result(self, index, extracted_feature_dict, logits_dict, labels_dict,
