@@ -3,6 +3,6 @@
 Goals:
 * implement a **centralized baseline** to define an upper bound
 * implement a **federated baseline** (FedAvg)
-* simulate **system heterogeneity** (FedGKT)
+* explore **system heterogeneity** (FedGKT)
 * simulate a **gradient inversion attack**
-* explore in more depth a topic among: statistical heterogeneity, system heterogeneity or privacy and security in a federated scenario
+* explore **statistical heterogeneity** (FedDyn)
