@@ -156,6 +156,7 @@ class FedDynClient():
                 
                 torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=self.clip_value)
                 optim.step()
+            print(f"loss epoch:{epoch}={loss_value/((epoch+1)*len(self.train_loader))}")
             del img, lbl
 
         with torch.no_grad():
