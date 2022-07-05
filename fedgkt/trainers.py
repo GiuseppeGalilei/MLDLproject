@@ -123,9 +123,10 @@ class GKTServerTrainer(object):
 
                 output_batch = self.model_global(batch_feature_map_x)
 
-                loss_kd = self.criterion_KL(output_batch, batch_logits).to(self.device)
+#                 loss_kd = self.criterion_KL(output_batch, batch_logits).to(self.device)
                 loss_true = self.criterion_CE(output_batch, batch_labels).to(self.device)
-                loss = loss_kd + self.args['alpha'] * loss_true
+#                 loss = loss_kd + self.args['alpha'] * loss_true
+                loss = loss_true
 
                 self.optimizer.zero_grad()
                 loss.backward()
