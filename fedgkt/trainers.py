@@ -24,8 +24,8 @@ class GKTServerTrainer(object):
 
         self.model_global.train()
 
-        self.optimizer = optim.Adam(self.model_global.parameters(), lr=3e-3, weight_decay=1e-4)
-        self.scheduler = MultiStepLR(self.optimizer, [20, 30, 40], gamma=0.33)
+        self.optimizer = optim.SGD(self.model_global.parameters(), lr=1e-3, momentum=0.9, weight_decay=5e-4)
+        self.scheduler = ReduceLROnPlateau(self.optimizer, 'max')
 
         self.criterion_CE = nn.CrossEntropyLoss()
         self.criterion_KL = KL_Loss(self.args['temperature'])
@@ -193,7 +193,7 @@ class GKTClientTrainer(object):
 
         self.client_model.to(self.device)
 
-        self.optimizer = optim.Adam(self.client_model.parameters(), lr=1e-3, weight_decay=1e-4)
+        self.optimizer = optim.SGD(self.client_model.parameters(), lr=1e-3, momentum=0.9, weight_decay=5e-4)
 
 
         self.criterion_CE = nn.CrossEntropyLoss()
