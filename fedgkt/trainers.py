@@ -4,7 +4,7 @@ Based on the implementation in https://github.com/FedML-AI/FedML
 
 import torch
 from torch import nn, optim
-from torch.optim.lr_scheduler import ReduceLROnPlateau
+from torch.optim.lr_scheduler import MultiStepLR
 from torch.utils.data import DataLoader
 
 from utils.reproducibility import seed_worker, make_it_reproducible
@@ -24,8 +24,8 @@ class GKTServerTrainer(object):
 
         self.model_global.train()
 
-        self.optimizer = optim.SGD(self.model_global.parameters(), lr=1e-3, momentum=0.9, weight_decay=5e-4)
-        self.scheduler = ReduceLROnPlateau(self.optimizer, 'max')
+        self.optimizer = optim.SGD(self.model_global.parameters(), lr=1e-2, momentum=0.5, weight_decay=0)
+        self.scheduler = MultiStepLR(self.optimizer, [15, 30, 45], gamma=0.33)
 
         self.criterion_CE = nn.CrossEntropyLoss()
         self.criterion_KL = KL_Loss(self.args['temperature'])
@@ -195,7 +195,7 @@ class GKTClientTrainer(object):
 
         self.client_model.to(self.device)
 
-        self.optimizer = optim.SGD(self.client_model.parameters(), lr=1e-3, momentum=0.9, weight_decay=5e-4)
+        self.optimizer = optim.SGD(self.client_model.parameters(), lr=1e-2, momentum=0.5, weight_decay=0)
 
 
         self.criterion_CE = nn.CrossEntropyLoss()
