@@ -96,7 +96,10 @@ class GKTServerTrainer(object):
             if epoch == epochs - 1:
                 test_metrics = self.eval_large_model_on_the_server(round_idx)
                 self.test_metrics_list.append(test_metrics)
-
+                
+                if test_metrics['test_acc'] >= self.best_acc:
+                    self.best_acc= test_metrics['test_acc']
+                
                 print({"test/loss": test_metrics['test_loss'],"test/accuracy": test_metrics['test_acc'], "round": round_idx + 1})
 
     def train_large_model_on_the_server(self, round_idx, epoch):
@@ -202,7 +205,6 @@ class GKTClientTrainer(object):
 
         self.server_logits_dict = dict()
 
-    # TODO understand these two functions
     def get_sample_number(self):
         return self.local_sample_number
 
