@@ -24,7 +24,7 @@ class GKTServerTrainer(object):
 
         self.model_global.train()
 
-        self.optimizer = optim.Adam(self.model_global.parameters(), lr=1e-3, weight_decay=1e-4)
+        self.optimizer = optim.Adam(self.model_global.parameters(), lr=3e-3, weight_decay=1e-4)
         self.scheduler = MultiStepLR(self.optimizer, [20, 30, 40], gamma=0.33)
 
         self.criterion_CE = nn.CrossEntropyLoss()
