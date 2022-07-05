@@ -92,10 +92,8 @@ class GKTServerTrainer(object):
         for epoch in range(epochs):
             train_metrics = self.train_large_model_on_the_server(round_idx, epoch)
             self.train_metrics_list.append(train_metrics)
-
+            print({"train/loss": train_metrics['train_loss'],"train/accuracy": train_metrics['train_acc'], "round": round_idx + 1})
             if epoch == epochs - 1:
-                print({"train/loss": train_metrics['train_loss'],"train/accuracy": train_metrics['train_acc'], "round": round_idx + 1})
-
                 test_metrics = self.eval_large_model_on_the_server(round_idx)
                 self.test_metrics_list.append(test_metrics)
 
