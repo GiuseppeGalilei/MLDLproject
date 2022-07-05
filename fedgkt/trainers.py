@@ -4,7 +4,7 @@ Based on the implementation in https://github.com/FedML-AI/FedML
 
 import torch
 from torch import nn, optim
-from torch.optim.lr_scheduler import MultiStepLR
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader
 
 from utils.reproducibility import seed_worker, make_it_reproducible
