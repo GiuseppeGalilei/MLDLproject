@@ -195,7 +195,7 @@ class GKTClientTrainer(object):
 
         self.client_model.to(self.device)
 
-        self.optimizer = optim.SGD(self.client_model.parameters(), lr=1e-2, momentum=0.5, weight_decay=0)
+        self.optimizer = optim.Adam(self.client_model.parameters(), lr=1e-3, weight_decay=1e-4)
 
 
         self.criterion_CE = nn.CrossEntropyLoss()
