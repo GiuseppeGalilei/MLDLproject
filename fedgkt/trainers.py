@@ -85,7 +85,7 @@ class GKTServerTrainer(object):
 
     def train(self, round_idx):
         self.train_and_eval(round_idx, self.args['epochs_server'])
-        self.scheduler.step(self.best_acc)
+        self.scheduler.step()
 
 
     def train_and_eval(self, round_idx, epochs):
