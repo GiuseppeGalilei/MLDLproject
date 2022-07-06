@@ -5,7 +5,7 @@ Baseed on the implementation in https://github.com/AshwinRJ/Federated-Learning-P
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
-from fedavg.utils.datasets import DatasetSplit
+from utils.datasets import DatasetSplit
 
 class LocalUpdate(object):
     def __init__(self, dataset, idxs, device, local_batch_size, local_epochs, worker_init_fn, generator):
