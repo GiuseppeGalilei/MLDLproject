@@ -18,15 +18,26 @@ def _cifar_iid(dataset, num_users):
     return dict_users, dict_users_cls_count
 
 
-def another_cifar_iid(dataset, num_users):
-    num_items = int(len(dataset) / num_users)
-    dict_users = {}
-    all_idxs = [i for i in range(len(dataset))]
-    for i in range(num_users):
-        dict_users[i] = set(np.random.choice(all_idxs, num_items,
-                                             replace=False))  # i.i.d. selection from dataset
-        all_idxs = list(set(all_idxs) - dict_users[i])
-    return dict_users, None
+def another_cifar_iid(server_id, server_labels, num_users):
+    users = np.arange(0, num_users)
+    num_items_balanced = int(len(server_id) / num_users)
+    dict_users = collections.defaultdict(dict)
+    labels = np.arange(0, 10)
+    dict_labels = get_dict_labels(server_id, server_labels)
+    all_idxs = [i for i in range(len(server_id))]
+    new_dict = {}
+    nets_cls_counts = collections.defaultdict(dict)
+    for user in users:
+        for label in labels:
+            dict_users[user][label] = set(np.random.choice(dict_labels[label],
+                                                           int(num_items_balanced / 10), replace=False))
+            all_idxs = list(set(all_idxs) - dict_users[user][label])
+            nets_cls_counts[user][label] = len(list(dict_users[user][label]))
+        new_dict[user] = set().union(dict_users[user][0], dict_users[user][1], dict_users[user][2],
+                                     dict_users[user][3], dict_users[user][4], dict_users[user][5], dict_users[user][6],
+                                     dict_users[user][7], dict_users[user][8], dict_users[user][9])
+
+    return server_labels, new_dict, nets_cls_counts
 
 
 def _cifar_noniid(dataset, num_users):
@@ -132,7 +143,7 @@ def _cifar_noniid_unbalanced(dataset, num_users):
 def get_another_user_groups(dataset, iid=True, unbalanced=False, tot_users=100):
     user_groups = None
     if iid:
-        user_groups, dict_user_cls_count = another_cifar_iid(dataset, tot_users)
+        server_labels, user_groups, dict_user_cls_count = another_cifar_iid(dataset, tot_users)
     else:
         if unbalanced:
             user_groups, dict_user_cls_count = _cifar_noniid_unbalanced(dataset, tot_users)
