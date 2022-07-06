@@ -18,6 +18,17 @@ def _cifar_iid(dataset, num_users):
     return dict_users, dict_users_cls_count
 
 
+def another_cifar_iid(dataset, num_users):
+    num_items = int(len(dataset) / num_users)
+    dict_users = {}
+    all_idxs = [i for i in range(len(dataset))]
+    for i in range(num_users):
+        dict_users[i] = set(np.random.choice(all_idxs, num_items,
+                                             replace=False))  # i.i.d. selection from dataset
+        all_idxs = list(set(all_idxs) - dict_users[i])
+    return dict_users
+
+
 def _cifar_noniid(dataset, num_users):
     num_shards, num_imgs = 200, 250
     idx_shard = [i for i in range(num_shards)]
