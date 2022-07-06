@@ -26,7 +26,7 @@ def another_cifar_iid(dataset, num_users):
         dict_users[i] = set(np.random.choice(all_idxs, num_items,
                                              replace=False))  # i.i.d. selection from dataset
         all_idxs = list(set(all_idxs) - dict_users[i])
-    return dict_users
+    return dict_users, None
 
 
 def _cifar_noniid(dataset, num_users):
@@ -128,6 +128,18 @@ def _cifar_noniid_unbalanced(dataset, num_users):
             dict_users_cls_count[i][targets[e.astype(int)]] += 1
 
     return dict_users, dict_users_cls_count
+
+def get_another_user_groups(dataset, iid=True, unbalanced=False, tot_users=100):
+    user_groups = None
+    if iid:
+        user_groups, dict_user_cls_count = another_cifar_iid(dataset, tot_users)
+    else:
+        if unbalanced:
+            user_groups, dict_user_cls_count = _cifar_noniid_unbalanced(dataset, tot_users)
+        else:
+            user_groups, dict_user_cls_count = _cifar_noniid(dataset, tot_users)
+
+    return user_groups, dict_user_cls_count
 
 
 def get_user_groups(dataset, iid=True, unbalanced=False, tot_users=100):
