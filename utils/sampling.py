@@ -3,7 +3,7 @@ Based on the implementation in https://github.com/AshwinRJ/Federated-Learning-Py
 """
 
 import numpy as np
-
+import collections
 
 def _cifar_iid(dataset, num_users):
     num_items = int(len(dataset)/num_users)
