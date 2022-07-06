@@ -140,10 +140,35 @@ def _cifar_noniid_unbalanced(dataset, num_users):
 
     return dict_users, dict_users_cls_count
 
+def get_server(train_dataset):
+    server_data = []
+    server_id = []
+    server_labels = []
+    for i in range(len(train_dataset)):
+        server_data.append(train_dataset[i][0])
+        server_labels.append(train_dataset[i][1])
+        server_id.append(i)
+    return server_data, server_labels, server_id
+
+
+def get_dict_labels(server_id, server_labels):
+    dict_labels = {}
+    num_classes = 10
+    labels = np.arange(0, num_classes)  # the 10 classes we have : from 0 to 9
+    for label in labels:
+        if label not in dict_labels:
+            dict_labels[label] = []
+    for i in range(len(server_labels)):
+        for label in labels:
+            if label == server_labels[i]:
+                dict_labels[label].append(server_id[i])
+    return dict_labels
+
 def get_another_user_groups(dataset, iid=True, unbalanced=False, tot_users=100):
     user_groups = None
     if iid:
-        server_labels, user_groups, dict_user_cls_count = another_cifar_iid(dataset, tot_users)
+        server_data, server_labels, server_id = get_server(dataset)
+        server_labels, user_groups, dict_user_cls_count = another_cifar_iid(server_id, server_labels, tot_users)
     else:
         if unbalanced:
             user_groups, dict_user_cls_count = _cifar_noniid_unbalanced(dataset, tot_users)
