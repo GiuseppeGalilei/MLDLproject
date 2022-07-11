@@ -1,0 +1,701 @@
+round,accuracy,loss,norm,scenario,hp
+1.0,0.4322333333333333,1.5931635912259423,BN,centralized, nan
+1.0,0.2316,2.0044281752904256,GN,centralized, nan
+2.0,0.5709000000000001,1.2316400533914569,BN,centralized, nan
+2.0,0.3196,1.8226140554745995,GN,centralized, nan
+3.0,0.6177,1.1461374853054682,BN,centralized, nan
+3.0,0.3252,1.8853156562646232,GN,centralized, nan
+4.0,0.6837,0.9268518225351968,BN,centralized, nan
+4.0,0.3838,1.7074824357032776,GN,centralized, nan
+5.0,0.7099666666666667,0.8555041420459748,BN,centralized, nan
+5.0,0.4454666666666667,1.5714420096079509,GN,centralized, nan
+6.0,0.7551333333333332,0.7566410829623541,BN,centralized, nan
+6.0,0.4569333333333333,1.577844358285268,GN,centralized, nan
+7.0,0.7721666666666667,0.6816117613514265,BN,centralized, nan
+7.0,0.5112,1.397388560771942,GN,centralized, nan
+8.0,0.7925333333333334,0.6350206444660822,BN,centralized, nan
+8.0,0.5458666666666666,1.280316089987755,GN,centralized, nan
+9.0,0.7935333333333333,0.6247872943679491,BN,centralized, nan
+9.0,0.5689,1.2531172446409862,GN,centralized, nan
+10.0,0.8071999999999999,0.589957047700882,BN,centralized, nan
+10.0,0.5860333333333334,1.1611647280057271,GN,centralized, nan
+11.0,0.8169333333333334,0.5671664867798487,BN,centralized, nan
+11.0,0.6133000000000001,1.1180703075726826,GN,centralized, nan
+12.0,0.8178666666666667,0.5739538762966792,BN,centralized, nan
+12.0,0.6451666666666667,1.0406884348392484,GN,centralized, nan
+13.0,0.8288333333333333,0.5441985940933227,BN,centralized, nan
+13.0,0.6547666666666667,0.9762484447161356,GN,centralized, nan
+14.0,0.8410000000000001,0.5129459205766519,BN,centralized, nan
+14.0,0.6940333333333334,0.8925560480356216,GN,centralized, nan
+15.0,0.8291666666666667,0.5511803887287776,BN,centralized, nan
+15.0,0.7004333333333334,0.8717959566911061,GN,centralized, nan
+16.0,0.8455333333333334,0.5078986279169718,BN,centralized, nan
+16.0,0.6808333333333333,0.9358023738861084,GN,centralized, nan
+17.0,0.8521333333333333,0.4820919301609198,BN,centralized, nan
+17.0,0.7215666666666666,0.8113644073406855,GN,centralized, nan
+18.0,0.8475333333333334,0.5006155007580916,BN,centralized, nan
+18.0,0.7442333333333334,0.767526364227136,GN,centralized, nan
+19.0,0.8520333333333334,0.4971288366119066,BN,centralized, nan
+19.0,0.7410666666666668,0.7756643058856328,GN,centralized, nan
+20.0,0.8621333333333333,0.4614021145304043,BN,centralized, nan
+20.0,0.7700333333333335,0.6782260677218437,GN,centralized, nan
+21.0,0.8903,0.3673191060125827,BN,centralized, nan
+21.0,0.8111,0.5518901074926058,GN,centralized, nan
+22.0,0.8921666666666667,0.3755149935682614,BN,centralized, nan
+22.0,0.8198,0.5336741590499878,GN,centralized, nan
+23.0,0.8887666666666666,0.3946722239752609,BN,centralized, nan
+23.0,0.8155000000000001,0.5400319967667263,GN,centralized, nan
+24.0,0.8923666666666666,0.3844863783319791,BN,centralized, nan
+24.0,0.8178000000000001,0.5362665660182634,GN,centralized, nan
+25.0,0.8918666666666667,0.4036006779472033,BN,centralized, nan
+25.0,0.8159333333333333,0.5393935018281142,GN,centralized, nan
+26.0,0.8904333333333333,0.4045837274690469,BN,centralized, nan
+26.0,0.8271666666666667,0.5097575612862905,GN,centralized, nan
+27.0,0.8929,0.4092813119292258,BN,centralized, nan
+27.0,0.8262,0.5126375750203928,GN,centralized, nan
+28.0,0.8931333333333334,0.4107161255180835,BN,centralized, nan
+28.0,0.8249333333333334,0.5235047965248426,GN,centralized, nan
+29.0,0.8910333333333335,0.4205945323159297,BN,centralized, nan
+29.0,0.8250666666666667,0.5159510420759519,GN,centralized, nan
+30.0,0.8884333333333334,0.4416561044255893,BN,centralized, nan
+30.0,0.8346666666666666,0.4864440528551736,GN,centralized, nan
+31.0,0.8990666666666667,0.4003696121027071,BN,centralized, nan
+31.0,0.8506,0.4499630080660184,GN,centralized, nan
+32.0,0.9001666666666667,0.4035017276803652,BN,centralized, nan
+32.0,0.8470333333333334,0.4582999042173226,GN,centralized, nan
+33.0,0.8992,0.405132314885656,BN,centralized, nan
+33.0,0.8512,0.4522556781768799,GN,centralized, nan
+34.0,0.9,0.4148522574702898,BN,centralized, nan
+34.0,0.8527666666666667,0.4444524448116621,GN,centralized, nan
+35.0,0.8997666666666667,0.4195860373973846,BN,centralized, nan
+35.0,0.8484000000000002,0.4662646640837192,GN,centralized, nan
+36.0,0.8993666666666668,0.4209421533594529,BN,centralized, nan
+36.0,0.8489666666666666,0.4656196325520674,GN,centralized, nan
+37.0,0.9001333333333333,0.4242794663210709,BN,centralized, nan
+37.0,0.8489000000000001,0.4659810745219389,GN,centralized, nan
+38.0,0.8991000000000001,0.4266097296774386,BN,centralized, nan
+38.0,0.8532666666666667,0.4508414162695407,GN,centralized, nan
+39.0,0.8981666666666666,0.4379794961462417,BN,centralized, nan
+39.0,0.8530000000000001,0.4520083480079968,GN,centralized, nan
+40.0,0.8987000000000002,0.4368278591583172,BN,centralized, nan
+40.0,0.8499333333333333,0.461950571288665,GN,centralized, nan
+41.0,0.9005000000000001,0.4305780317882696,BN,centralized, nan
+41.0,0.8586,0.4376487095654011,GN,centralized, nan
+42.0,0.8999333333333334,0.4331688060363133,BN,centralized, nan
+42.0,0.8566666666666668,0.4423487376173337,GN,centralized, nan
+43.0,0.9003666666666668,0.4336731127649545,BN,centralized, nan
+43.0,0.8583,0.4401128130157788,GN,centralized, nan
+44.0,0.9008,0.4330055843790372,BN,centralized, nan
+44.0,0.8592333333333334,0.4386163046459357,GN,centralized, nan
+45.0,0.9012,0.437916628892223,BN,centralized, nan
+45.0,0.8566666666666668,0.4467473326126734,GN,centralized, nan
+46.0,0.9008333333333332,0.437764298915863,BN,centralized, nan
+46.0,0.8573333333333334,0.4430816430350144,GN,centralized, nan
+47.0,0.9003333333333333,0.4387271689871946,BN,centralized, nan
+47.0,0.8599666666666667,0.4396991462012132,GN,centralized, nan
+48.0,0.9002666666666667,0.4407000548640887,BN,centralized, nan
+48.0,0.8618333333333333,0.4351714593172073,GN,centralized, nan
+49.0,0.9008,0.4375230148931344,BN,centralized, nan
+49.0,0.8605333333333333,0.4411187563836574,GN,centralized, nan
+50.0,0.9006,0.4394908031324545,BN,centralized, nan
+50.0,0.8598666666666667,0.4415465436379115,GN,centralized, nan
+1,0.1,2.43794716278712,BN,feddyn iid balanced,paper
+1,0.1,2.762197247346242,BN,feddyn noniid balanced,paper
+1,0.1,2.7863689454396563,BN,feddyn noniid unbalanced,paper
+1,0.106,2.707300647989909,GN,feddyn iid balanced,paper
+1,0.1002,3.202433483282725,GN,feddyn noniid balanced,paper
+1,0.1,6.56907662630081,GN,feddyn noniid unbalanced,paper
+2,0.1,,BN,feddyn iid balanced,paper
+2,0.1,,BN,feddyn noniid balanced,paper
+2,0.1,,BN,feddyn noniid unbalanced,paper
+2,0.1007666666666666,2.348035968621572,GN,feddyn iid balanced,paper
+2,0.1,3.422074863592784,GN,feddyn noniid balanced,paper
+2,0.1,3.571524226665497,GN,feddyn noniid unbalanced,paper
+3,0.1,,BN,feddyn iid balanced,paper
+3,0.1,,BN,feddyn noniid balanced,paper
+3,0.1,,BN,feddyn noniid unbalanced,paper
+3,0.1077,2.30363101199468,GN,feddyn iid balanced,paper
+3,0.1,2.7468715239842734,GN,feddyn noniid balanced,paper
+3,0.1,3.013255139986674,GN,feddyn noniid unbalanced,paper
+4,0.1,,BN,feddyn iid balanced,paper
+4,0.1,,BN,feddyn noniid balanced,paper
+4,0.1,,BN,feddyn noniid unbalanced,paper
+4,0.1128666666666666,2.2977404839515683,GN,feddyn iid balanced,paper
+4,0.1003333333333333,2.7721961577733354,GN,feddyn noniid balanced,paper
+4,0.1,2.64377299785614,GN,feddyn noniid unbalanced,paper
+5,0.1,,BN,feddyn iid balanced,paper
+5,0.1,,BN,feddyn noniid balanced,paper
+5,0.1,,BN,feddyn noniid unbalanced,paper
+5,0.1079333333333333,2.2985390044212344,GN,feddyn iid balanced,paper
+5,0.1007666666666666,2.6735681524594628,GN,feddyn noniid balanced,paper
+5,0.0988333333333333,3.145024706522624,GN,feddyn noniid unbalanced,paper
+6,0.1,,BN,feddyn iid balanced,paper
+6,0.1,,BN,feddyn noniid balanced,paper
+6,0.1,,BN,feddyn noniid unbalanced,paper
+6,0.1086333333333333,2.2970272537231446,GN,feddyn iid balanced,paper
+6,0.1,2.426646052487691,GN,feddyn noniid balanced,paper
+6,0.1000333333333333,2.5048714868227644,GN,feddyn noniid unbalanced,paper
+7,0.1,,BN,feddyn iid balanced,paper
+7,0.1,,BN,feddyn noniid balanced,paper
+7,0.1,,BN,feddyn noniid unbalanced,paper
+7,0.1215333333333333,2.289705722840627,GN,feddyn iid balanced,paper
+7,0.1007333333333333,2.4482967290878297,GN,feddyn noniid balanced,paper
+7,0.0994333333333333,2.459276297092438,GN,feddyn noniid unbalanced,paper
+8,0.1,,BN,feddyn iid balanced,paper
+8,0.1,,BN,feddyn noniid balanced,paper
+8,0.1,,BN,feddyn noniid unbalanced,paper
+8,0.1257333333333333,2.283856887976329,GN,feddyn iid balanced,paper
+8,0.1036333333333333,2.396830814170837,GN,feddyn noniid balanced,paper
+8,0.1,3.084746774832408,GN,feddyn noniid unbalanced,paper
+9,0.1,,BN,feddyn iid balanced,paper
+9,0.1,,BN,feddyn noniid balanced,paper
+9,0.1,,BN,feddyn noniid unbalanced,paper
+9,0.1387333333333333,2.258024545065562,GN,feddyn iid balanced,paper
+9,0.1004333333333333,2.531849992338816,GN,feddyn noniid balanced,paper
+9,0.1000666666666666,2.850494269529978,GN,feddyn noniid unbalanced,paper
+10,0.1,,BN,feddyn iid balanced,paper
+10,0.1,,BN,feddyn noniid balanced,paper
+10,0.1,,BN,feddyn noniid unbalanced,paper
+10,0.1537,2.225542688401541,GN,feddyn iid balanced,paper
+10,0.1,2.5768093290011085,GN,feddyn noniid balanced,paper
+10,0.1,2.543024227619171,GN,feddyn noniid unbalanced,paper
+11,0.1,,BN,feddyn iid balanced,paper
+11,0.1,,BN,feddyn noniid balanced,paper
+11,0.1,,BN,feddyn noniid unbalanced,paper
+11,0.1779,2.193735132567088,GN,feddyn iid balanced,paper
+11,0.1000333333333333,2.5412404071807866,GN,feddyn noniid balanced,paper
+11,0.1,2.6649500918388367,GN,feddyn noniid unbalanced,paper
+12,0.1,,BN,feddyn iid balanced,paper
+12,0.1,,BN,feddyn noniid balanced,paper
+12,0.1,,BN,feddyn noniid unbalanced,paper
+12,0.1942,2.153538535022736,GN,feddyn iid balanced,paper
+12,0.1003,2.560545938714345,GN,feddyn noniid balanced,paper
+12,0.0996666666666666,2.8648817841211955,GN,feddyn noniid unbalanced,paper
+13,0.1,,BN,feddyn iid balanced,paper
+13,0.1,,BN,feddyn noniid balanced,paper
+13,0.1,,BN,feddyn noniid unbalanced,paper
+13,0.2093,2.1168161068439484,GN,feddyn iid balanced,paper
+13,0.1,2.588241879240672,GN,feddyn noniid balanced,paper
+13,0.1,2.770446928342184,GN,feddyn noniid unbalanced,paper
+14,0.1,,BN,feddyn iid balanced,paper
+14,0.1,,BN,feddyn noniid balanced,paper
+14,0.1,,BN,feddyn noniid unbalanced,paper
+14,0.2117666666666666,2.09501246008873,GN,feddyn iid balanced,paper
+14,0.1001666666666666,2.571395028241476,GN,feddyn noniid balanced,paper
+14,0.0997333333333333,2.578090988000234,GN,feddyn noniid unbalanced,paper
+15,0.1,,BN,feddyn iid balanced,paper
+15,0.1,,BN,feddyn noniid balanced,paper
+15,0.1,,BN,feddyn noniid unbalanced,paper
+15,0.2173666666666666,2.081508935658137,GN,feddyn iid balanced,paper
+15,0.1016333333333333,2.4801510533014937,GN,feddyn noniid balanced,paper
+15,0.1005333333333333,2.596367023785909,GN,feddyn noniid unbalanced,paper
+16,0.1,,BN,feddyn iid balanced,paper
+16,0.1,,BN,feddyn noniid balanced,paper
+16,0.1,,BN,feddyn noniid unbalanced,paper
+16,0.219,2.0608914463361105,GN,feddyn iid balanced,paper
+16,0.1018,2.4963394905090333,GN,feddyn noniid balanced,paper
+16,0.1,2.816274042924245,GN,feddyn noniid unbalanced,paper
+17,0.1,,BN,feddyn iid balanced,paper
+17,0.1,,BN,feddyn noniid balanced,paper
+17,0.1,,BN,feddyn noniid unbalanced,paper
+17,0.2379666666666666,2.0388261366049445,GN,feddyn iid balanced,paper
+17,0.1044,2.4902902591705325,GN,feddyn noniid balanced,paper
+17,0.1,2.5020617834726973,GN,feddyn noniid unbalanced,paper
+18,0.1,,BN,feddyn iid balanced,paper
+18,0.1,,BN,feddyn noniid balanced,paper
+18,0.1,,BN,feddyn noniid unbalanced,paper
+18,0.2502,2.018941958586375,GN,feddyn iid balanced,paper
+18,0.1015666666666666,2.711470258776347,GN,feddyn noniid balanced,paper
+18,0.1,2.7359232370058693,GN,feddyn noniid unbalanced,paper
+19,0.1,,BN,feddyn iid balanced,paper
+19,0.1,,BN,feddyn noniid balanced,paper
+19,0.1,,BN,feddyn noniid unbalanced,paper
+19,0.2537999999999999,2.001845589462916,GN,feddyn iid balanced,paper
+19,0.1013,2.4636879777272545,GN,feddyn noniid balanced,paper
+19,0.1,2.5418125263849896,GN,feddyn noniid unbalanced,paper
+20,0.2411666666666666,1.3938367474079132,BN,feddyn iid balanced,paper
+20,0.1,,BN,feddyn noniid balanced,paper
+20,0.1,,BN,feddyn noniid unbalanced,paper
+20,0.2638666666666667,1.9859630660216008,GN,feddyn iid balanced,paper
+20,0.1092666666666666,2.602725398127238,GN,feddyn noniid balanced,paper
+20,0.1,2.783793340524038,GN,feddyn noniid unbalanced,paper
+21,0.2454333333333333,1.3738359487056733,BN,feddyn iid balanced,paper
+21,0.1,,BN,feddyn noniid balanced,paper
+21,0.1,,BN,feddyn noniid unbalanced,paper
+21,0.2698666666666666,1.966840435266495,GN,feddyn iid balanced,paper
+21,0.1014,2.5143352075258893,GN,feddyn noniid balanced,paper
+21,0.1,2.808679796854655,GN,feddyn noniid unbalanced,paper
+22,0.3843,1.3707790237665176,BN,feddyn iid balanced,paper
+22,0.1,,BN,feddyn noniid balanced,paper
+22,0.1,,BN,feddyn noniid unbalanced,paper
+22,0.2743666666666666,1.9540699244181312,GN,feddyn iid balanced,paper
+22,0.1,2.4567216157277425,GN,feddyn noniid balanced,paper
+22,0.1037,2.619693036874136,GN,feddyn noniid unbalanced,paper
+23,0.4126333333333334,1.2562869134545327,BN,feddyn iid balanced,paper
+23,0.1,,BN,feddyn noniid balanced,paper
+23,0.1,,BN,feddyn noniid unbalanced,paper
+23,0.2800666666666666,1.9412196742693584,GN,feddyn iid balanced,paper
+23,0.101,2.42167381811142,GN,feddyn noniid balanced,paper
+23,0.1,2.749837940533956,GN,feddyn noniid unbalanced,paper
+24,0.4237,1.252123780846596,BN,feddyn iid balanced,paper
+24,0.1,,BN,feddyn noniid balanced,paper
+24,0.1,,BN,feddyn noniid unbalanced,paper
+24,0.2793666666666666,1.9335040075620016,GN,feddyn iid balanced,paper
+24,0.1052333333333333,2.429295939540863,GN,feddyn noniid balanced,paper
+24,0.0998666666666666,2.5701852893829344,GN,feddyn noniid unbalanced,paper
+25,0.5991666666666666,1.209683863123258,BN,feddyn iid balanced,paper
+25,0.1,,BN,feddyn noniid balanced,paper
+25,0.1,,BN,feddyn noniid unbalanced,paper
+25,0.2927,1.92137797943751,GN,feddyn iid balanced,paper
+25,0.1055333333333333,2.5169684511502584,GN,feddyn noniid balanced,paper
+25,0.0998,2.514157254695893,GN,feddyn noniid unbalanced,paper
+26,0.6161666666666666,1.1720411884784698,BN,feddyn iid balanced,paper
+26,0.1,,BN,feddyn noniid balanced,paper
+26,0.1,,BN,feddyn noniid unbalanced,paper
+26,0.293,1.9102298302173613,GN,feddyn iid balanced,paper
+26,0.1099,2.4072081908543908,GN,feddyn noniid balanced,paper
+26,0.1004666666666666,2.4946640634536745,GN,feddyn noniid unbalanced,paper
+27,0.6136,1.2228920163710912,BN,feddyn iid balanced,paper
+27,0.1,,BN,feddyn noniid balanced,paper
+27,0.1,,BN,feddyn noniid unbalanced,paper
+27,0.2965,1.8973902981917063,GN,feddyn iid balanced,paper
+27,0.1024,2.481669312508901,GN,feddyn noniid balanced,paper
+27,0.1,2.8079844077428184,GN,feddyn noniid unbalanced,paper
+28,0.6305666666666667,1.1722766908009847,BN,feddyn iid balanced,paper
+28,0.1,,BN,feddyn noniid balanced,paper
+28,0.1,2.697088418006897,BN,feddyn noniid unbalanced,paper
+28,0.2939666666666666,1.8991389342149096,GN,feddyn iid balanced,paper
+28,0.1025333333333333,2.432693744564056,GN,feddyn noniid balanced,paper
+28,0.1002333333333333,2.6033894157409665,GN,feddyn noniid unbalanced,paper
+29,0.6416,1.1337512576580049,BN,feddyn iid balanced,paper
+29,0.1,,BN,feddyn noniid balanced,paper
+29,0.1,,BN,feddyn noniid unbalanced,paper
+29,0.3019,1.8840018630027773,GN,feddyn iid balanced,paper
+29,0.1061666666666666,2.52792973839442,GN,feddyn noniid balanced,paper
+29,0.1,2.9280214015642803,GN,feddyn noniid unbalanced,paper
+30,0.6576666666666667,1.0760825071732203,BN,feddyn iid balanced,paper
+30,0.1,,BN,feddyn noniid balanced,paper
+30,0.1,,BN,feddyn noniid unbalanced,paper
+30,0.305,1.874737403122584,GN,feddyn iid balanced,paper
+30,0.1144666666666666,2.4284794572512305,GN,feddyn noniid balanced,paper
+30,0.1,2.67810640891393,GN,feddyn noniid unbalanced,paper
+31,0.6619,1.083246547182401,BN,feddyn iid balanced,paper
+31,0.1,2.5365091943740845,BN,feddyn noniid balanced,paper
+31,0.1,,BN,feddyn noniid unbalanced,paper
+31,0.3084333333333333,1.861838563903173,GN,feddyn iid balanced,paper
+31,0.1026,2.3920914943377176,GN,feddyn noniid balanced,paper
+31,0.1,2.950750487645467,GN,feddyn noniid unbalanced,paper
+32,0.6676333333333334,1.0920474251111347,BN,feddyn iid balanced,paper
+32,0.1002,3.254176986217499,BN,feddyn noniid balanced,paper
+32,0.1,2.531501395702362,BN,feddyn noniid unbalanced,paper
+32,0.3072666666666666,1.8694035328388208,GN,feddyn iid balanced,paper
+32,0.1,2.530154493840536,GN,feddyn noniid balanced,paper
+32,0.1,2.6299977111816406,GN,feddyn noniid unbalanced,paper
+33,0.6823,1.0629191426436106,BN,feddyn iid balanced,paper
+33,0.0979666666666666,2.6007272756099704,BN,feddyn noniid balanced,paper
+33,0.1,2.570705943107605,BN,feddyn noniid unbalanced,paper
+33,0.315,1.8520541384855904,GN,feddyn iid balanced,paper
+33,0.1040666666666666,2.442161271349589,GN,feddyn noniid balanced,paper
+33,0.1,2.558389195601145,GN,feddyn noniid unbalanced,paper
+34,0.6735666666666668,1.12129592359066,BN,feddyn iid balanced,paper
+34,0.1044666666666666,2.750535459518433,BN,feddyn noniid balanced,paper
+34,0.1,,BN,feddyn noniid unbalanced,paper
+34,0.3131666666666666,1.850251700115204,GN,feddyn iid balanced,paper
+34,0.1114333333333333,2.5203571491559345,GN,feddyn noniid balanced,paper
+34,0.1,2.6585760696729026,GN,feddyn noniid unbalanced,paper
+35,0.694,1.016608974734942,BN,feddyn iid balanced,paper
+35,0.0995333333333333,2.6961355423927307,BN,feddyn noniid balanced,paper
+35,0.1,,BN,feddyn noniid unbalanced,paper
+35,0.3159666666666667,1.842455965503057,GN,feddyn iid balanced,paper
+35,0.1029333333333333,2.5105963572184247,GN,feddyn noniid balanced,paper
+35,0.1001333333333333,2.6078635064760847,GN,feddyn noniid unbalanced,paper
+36,0.6940666666666667,1.0444143001238506,BN,feddyn iid balanced,paper
+36,0.1002333333333333,3.379416508674621,BN,feddyn noniid balanced,paper
+36,0.1,,BN,feddyn noniid unbalanced,paper
+36,0.3182666666666667,1.8397080808321635,GN,feddyn iid balanced,paper
+36,0.1014333333333333,2.5147329984982814,GN,feddyn noniid balanced,paper
+36,0.1,2.6604420256614687,GN,feddyn noniid unbalanced,paper
+37,0.7033666666666667,1.0202063930034635,BN,feddyn iid balanced,paper
+37,0.1,,BN,feddyn noniid balanced,paper
+37,0.1,,BN,feddyn noniid unbalanced,paper
+37,0.3212,1.8300941012382503,GN,feddyn iid balanced,paper
+37,0.1006666666666666,2.49230966386795,GN,feddyn noniid balanced,paper
+37,0.0990666666666666,2.5755226651827496,GN,feddyn noniid unbalanced,paper
+38,0.7088333333333333,0.9974319265286128,BN,feddyn iid balanced,paper
+38,0.1017,2.646406396627426,BN,feddyn noniid balanced,paper
+38,0.0999666666666666,3.0703842306137084,BN,feddyn noniid unbalanced,paper
+38,0.3269333333333333,1.822869926261902,GN,feddyn iid balanced,paper
+38,0.1059666666666666,2.494742096169789,GN,feddyn noniid balanced,paper
+38,0.1037,2.7886194435755414,GN,feddyn noniid unbalanced,paper
+39,0.7146333333333333,0.9863084675868352,BN,feddyn iid balanced,paper
+39,0.1004666666666666,2.438231539726257,BN,feddyn noniid balanced,paper
+39,0.1,2.797525289058685,BN,feddyn noniid unbalanced,paper
+39,0.3280666666666667,1.8107424513657888,GN,feddyn iid balanced,paper
+39,0.1,2.4669737713495894,GN,feddyn noniid balanced,paper
+39,0.1028,2.584565552075704,GN,feddyn noniid unbalanced,paper
+40,0.7148666666666667,0.9818339614073436,BN,feddyn iid balanced,paper
+40,0.1132,2.877530452013016,BN,feddyn noniid balanced,paper
+40,0.1,3.4441151928901674,BN,feddyn noniid unbalanced,paper
+40,0.3326666666666666,1.8077899655977887,GN,feddyn iid balanced,paper
+40,0.1025333333333333,2.701985158507029,GN,feddyn noniid balanced,paper
+40,0.1004999999999999,2.8490055123964946,GN,feddyn noniid unbalanced,paper
+41,0.7169333333333334,0.9937835663557054,BN,feddyn iid balanced,paper
+41,0.1055,3.0687472009658814,BN,feddyn noniid balanced,paper
+41,0.1097666666666666,2.7259117221832274,BN,feddyn noniid unbalanced,paper
+41,0.3369333333333333,1.7963960730075836,GN,feddyn iid balanced,paper
+41,0.1241333333333333,2.632221731917064,GN,feddyn noniid balanced,paper
+41,0.1025333333333333,2.6615317940711978,GN,feddyn noniid unbalanced,paper
+42,0.7245666666666667,0.9800719632705052,BN,feddyn iid balanced,paper
+42,0.1000333333333333,2.8875971615314486,BN,feddyn noniid balanced,paper
+42,0.1,3.192611734867096,BN,feddyn noniid unbalanced,paper
+42,0.3364,1.8060561304569245,GN,feddyn iid balanced,paper
+42,0.1,2.5226863747278845,GN,feddyn noniid balanced,paper
+42,0.1001,2.716668819586436,GN,feddyn noniid unbalanced,paper
+43,0.7351333333333333,0.9478498490651448,BN,feddyn iid balanced,paper
+43,0.1097333333333333,3.0177151107788087,BN,feddyn noniid balanced,paper
+43,0.1154333333333333,2.461584403514862,BN,feddyn noniid unbalanced,paper
+43,0.3345,1.8022472599983217,GN,feddyn iid balanced,paper
+43,0.1193666666666666,2.7124655824343367,GN,feddyn noniid balanced,paper
+43,0.1,2.55812784910202,GN,feddyn noniid unbalanced,paper
+44,0.7366333333333333,0.9469186941782636,BN,feddyn iid balanced,paper
+44,0.0992,3.0948185217380524,BN,feddyn noniid balanced,paper
+44,0.0994,2.7247050583362578,BN,feddyn noniid unbalanced,paper
+44,0.3446333333333333,1.7833578099250793,GN,feddyn iid balanced,paper
+44,0.1065666666666666,2.5872006943384807,GN,feddyn noniid balanced,paper
+44,0.1000666666666666,2.641699730555217,GN,feddyn noniid unbalanced,paper
+45,0.7424333333333334,0.9433678819735846,BN,feddyn iid balanced,paper
+45,0.1006333333333333,2.879693865776062,BN,feddyn noniid balanced,paper
+45,0.1,2.650873291492462,BN,feddyn noniid unbalanced,paper
+45,0.3427333333333333,1.7856135194301606,GN,feddyn iid balanced,paper
+45,0.1227333333333333,2.6578964124679563,GN,feddyn noniid balanced,paper
+45,0.1001666666666666,2.6529139264424644,GN,feddyn noniid unbalanced,paper
+46,0.7423000000000001,0.9296965727210044,BN,feddyn iid balanced,paper
+46,0.1042666666666666,2.608658207654953,BN,feddyn noniid balanced,paper
+46,0.1,2.437637903690338,BN,feddyn noniid unbalanced,paper
+46,0.345,1.7706690544287362,GN,feddyn iid balanced,paper
+46,0.1185333333333333,2.5185407995224,GN,feddyn noniid balanced,paper
+46,0.1000666666666666,2.5565728584925336,GN,feddyn noniid unbalanced,paper
+47,0.7439,0.9400248988469442,BN,feddyn iid balanced,paper
+47,0.1002333333333333,3.2036743275324504,BN,feddyn noniid balanced,paper
+47,0.0998999999999999,2.507190854549408,BN,feddyn noniid unbalanced,paper
+47,0.3509666666666666,1.7679253498713177,GN,feddyn iid balanced,paper
+47,0.1237333333333333,2.478013087590535,GN,feddyn noniid balanced,paper
+47,0.101,2.752601570288341,GN,feddyn noniid unbalanced,paper
+48,0.7541000000000001,0.9062012522419294,BN,feddyn iid balanced,paper
+48,0.1009,2.775870881080628,BN,feddyn noniid balanced,paper
+48,0.1001,2.486764466762543,BN,feddyn noniid unbalanced,paper
+48,0.3563333333333333,1.7482357241471609,GN,feddyn iid balanced,paper
+48,0.1259666666666666,2.402386115455627,GN,feddyn noniid balanced,paper
+48,0.1002,2.570307929515838,GN,feddyn noniid unbalanced,paper
+49,0.7525333333333334,0.9172246924042704,BN,feddyn iid balanced,paper
+49,0.0998999999999999,2.802846748828888,BN,feddyn noniid balanced,paper
+49,0.0999666666666666,2.4387440347671507,BN,feddyn noniid unbalanced,paper
+49,0.3556333333333333,1.7397390165011088,GN,feddyn iid balanced,paper
+49,0.1003,2.636370257504781,GN,feddyn noniid balanced,paper
+49,0.1007,2.6767462611198423,GN,feddyn noniid unbalanced,paper
+50,0.7569333333333333,0.9006567764282226,BN,feddyn iid balanced,paper
+50,0.1003333333333333,2.838535900115968,BN,feddyn noniid balanced,paper
+50,0.1008,2.7683025097846983,BN,feddyn noniid unbalanced,paper
+50,0.3588,1.736640887260437,GN,feddyn iid balanced,paper
+50,0.1115666666666666,2.439055910650889,GN,feddyn noniid balanced,paper
+50,0.1122666666666666,2.6553089253107705,GN,feddyn noniid unbalanced,paper
+1,0.0984,2.4970648495356245,BN,feddyn iid balanced,cnn tuned
+1,0.09926666666666667,2.427277958393097,BN,feddyn noniid balanced,cnn tuned
+1,0.10003333333333335,2.530818904240926,BN,feddyn noniid unbalanced,cnn tuned
+1,0.10089999999999999,2.4453623366355894,GN,feddyn iid balanced,cnn tuned
+1,0.10606666666666668,3.074690616130829,GN,feddyn noniid balanced,cnn tuned
+1,0.09916666666666667,6.043072770436605,GN,feddyn noniid unbalanced,cnn tuned
+2,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+2,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+2,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+2,0.14986666666666668,2.2705172220865886,GN,feddyn iid balanced,cnn tuned
+2,0.10049999999999999,3.4334131781260173,GN,feddyn noniid balanced,cnn tuned
+2,0.10026666666666667,3.002738898595174,GN,feddyn noniid unbalanced,cnn tuned
+3,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+3,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+3,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+3,0.1554,2.231607458591461,GN,feddyn iid balanced,cnn tuned
+3,0.10046666666666666,3.1066186213493343,GN,feddyn noniid balanced,cnn tuned
+3,0.10000000000000002,3.164546549320221,GN,feddyn noniid unbalanced,cnn tuned
+4,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+4,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+4,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+4,0.17753333333333332,2.1886636869112657,GN,feddyn iid balanced,cnn tuned
+4,0.10000000000000002,3.031303471724192,GN,feddyn noniid balanced,cnn tuned
+4,0.10000000000000002,2.856139216423035,GN,feddyn noniid unbalanced,cnn tuned
+5,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+5,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+5,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+5,0.19936666666666666,2.1332898708184564,GN,feddyn iid balanced,cnn tuned
+5,0.10000000000000002,2.963048284848531,GN,feddyn noniid balanced,cnn tuned
+5,0.10323333333333334,3.526241920789083,GN,feddyn noniid unbalanced,cnn tuned
+6,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+6,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+6,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+6,0.23830000000000004,2.0507919522126516,GN,feddyn iid balanced,cnn tuned
+6,0.1002,2.735546358426412,GN,feddyn noniid balanced,cnn tuned
+6,0.11193333333333333,2.8301968566576643,GN,feddyn noniid unbalanced,cnn tuned
+7,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+7,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+7,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+7,0.26286666666666664,1.9727238142490389,GN,feddyn iid balanced,cnn tuned
+7,0.10416666666666667,2.775309774080912,GN,feddyn noniid balanced,cnn tuned
+7,0.10446666666666667,2.843537971178691,GN,feddyn noniid unbalanced,cnn tuned
+8,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+8,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+8,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+8,0.27899999999999997,1.9218481409549713,GN,feddyn iid balanced,cnn tuned
+8,0.10000000000000002,2.4605135162671408,GN,feddyn noniid balanced,cnn tuned
+8,0.10000000000000002,3.615548366705577,GN,feddyn noniid unbalanced,cnn tuned
+9,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+9,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+9,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+9,0.2887,1.9095866044362386,GN,feddyn iid balanced,cnn tuned
+9,0.10846666666666667,2.713888073762258,GN,feddyn noniid balanced,cnn tuned
+9,0.10000000000000002,3.2612925044695538,GN,feddyn noniid unbalanced,cnn tuned
+10,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+10,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+10,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+10,0.29296666666666665,1.8998124770323435,GN,feddyn iid balanced,cnn tuned
+10,0.12020000000000002,2.6813454167048136,GN,feddyn noniid balanced,cnn tuned
+10,0.10713333333333334,2.9212506755193073,GN,feddyn noniid unbalanced,cnn tuned
+11,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+11,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+11,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+11,0.31583333333333335,1.8481211177508035,GN,feddyn iid balanced,cnn tuned
+11,0.11266666666666668,2.5641062839825945,GN,feddyn noniid balanced,cnn tuned
+11,0.10000000000000002,3.342675669987996,GN,feddyn noniid unbalanced,cnn tuned
+12,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+12,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+12,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+12,0.31560000000000005,1.837338266372681,GN,feddyn iid balanced,cnn tuned
+12,0.11210000000000002,2.6556809012095135,GN,feddyn noniid balanced,cnn tuned
+12,0.10000000000000002,3.407685253620148,GN,feddyn noniid unbalanced,cnn tuned
+13,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+13,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+13,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+13,0.3289333333333333,1.8116485444704689,GN,feddyn iid balanced,cnn tuned
+13,0.10026666666666667,2.727625826994578,GN,feddyn noniid balanced,cnn tuned
+13,0.10000000000000002,3.111479052702586,GN,feddyn noniid unbalanced,cnn tuned
+14,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+14,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+14,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+14,0.34253333333333336,1.7747839017709097,GN,feddyn iid balanced,cnn tuned
+14,0.10446666666666667,2.6510227044423424,GN,feddyn noniid balanced,cnn tuned
+14,0.10000000000000002,2.6881477944056194,GN,feddyn noniid unbalanced,cnn tuned
+15,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+15,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+15,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+15,0.3570333333333333,1.7523080337047576,GN,feddyn iid balanced,cnn tuned
+15,0.12513333333333335,2.4997626646359765,GN,feddyn noniid balanced,cnn tuned
+15,0.10226666666666667,2.7386858741442364,GN,feddyn noniid unbalanced,cnn tuned
+16,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+16,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+16,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+16,0.3632666666666667,1.7453619031111398,GN,feddyn iid balanced,cnn tuned
+16,0.10000000000000002,2.693999163309733,GN,feddyn noniid balanced,cnn tuned
+16,0.10000000000000002,2.936834272543589,GN,feddyn noniid unbalanced,cnn tuned
+17,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+17,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+17,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+17,0.36706666666666665,1.7364819939931235,GN,feddyn iid balanced,cnn tuned
+17,0.12773333333333334,2.519648183186849,GN,feddyn noniid balanced,cnn tuned
+17,0.10363333333333334,2.5526870703697204,GN,feddyn noniid unbalanced,cnn tuned
+18,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+18,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+18,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+18,0.37283333333333335,1.7405945869286856,GN,feddyn iid balanced,cnn tuned
+18,0.14073333333333335,2.6294007762273153,GN,feddyn noniid balanced,cnn tuned
+18,0.10000000000000002,2.795784868399302,GN,feddyn noniid unbalanced,cnn tuned
+19,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+19,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+19,0.10000000000000002,,BN,feddyn noniid unbalanced,cnn tuned
+19,0.3864666666666667,1.674748539129893,GN,feddyn iid balanced,cnn tuned
+19,0.11076666666666668,2.4345623493194584,GN,feddyn noniid balanced,cnn tuned
+19,0.10643333333333334,2.570482517083486,GN,feddyn noniid unbalanced,cnn tuned
+20,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+20,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+20,0.10126666666666667,2.384977593421936,BN,feddyn noniid unbalanced,cnn tuned
+20,0.4008666666666667,1.6458255191644033,GN,feddyn iid balanced,cnn tuned
+20,0.11653333333333334,2.6295401358604433,GN,feddyn noniid balanced,cnn tuned
+20,0.10000000000000002,3.130520985921224,GN,feddyn noniid unbalanced,cnn tuned
+21,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+21,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+21,0.10000000000000002,2.508185051679611,BN,feddyn noniid unbalanced,cnn tuned
+21,0.40546666666666664,1.6363727541764577,GN,feddyn iid balanced,cnn tuned
+21,0.11699999999999999,2.5328259142239884,GN,feddyn noniid balanced,cnn tuned
+21,0.1042,3.193505682945252,GN,feddyn noniid unbalanced,cnn tuned
+22,0.13483333333333333,10.045370030403138,BN,feddyn iid balanced,cnn tuned
+22,0.10000000000000002,,BN,feddyn noniid balanced,cnn tuned
+22,0.0943,2.7296787261962887,BN,feddyn noniid unbalanced,cnn tuned
+22,0.4100333333333333,1.6192593888441722,GN,feddyn iid balanced,cnn tuned
+22,0.11876666666666667,2.3859209672609967,GN,feddyn noniid balanced,cnn tuned
+22,0.1083,2.824484264850616,GN,feddyn noniid unbalanced,cnn tuned
+23,0.16440000000000002,5.423183903694153,BN,feddyn iid balanced,cnn tuned
+23,0.10136666666666667,3.718107316493988,BN,feddyn noniid balanced,cnn tuned
+23,0.10000000000000002,3.0098760819435117,BN,feddyn noniid unbalanced,cnn tuned
+23,0.4184666666666667,1.596617814699809,GN,feddyn iid balanced,cnn tuned
+23,0.1573,2.310374564329783,GN,feddyn noniid balanced,cnn tuned
+23,0.10003333333333335,2.925081416765849,GN,feddyn noniid unbalanced,cnn tuned
+24,0.17656666666666668,8.376602697372437,BN,feddyn iid balanced,cnn tuned
+24,0.10000000000000002,2.609636707305908,BN,feddyn noniid balanced,cnn tuned
+24,0.11553333333333334,2.785366247495016,BN,feddyn noniid unbalanced,cnn tuned
+24,0.42616666666666664,1.5772926958401996,GN,feddyn iid balanced,cnn tuned
+24,0.13646666666666665,2.3845707408587136,GN,feddyn noniid balanced,cnn tuned
+24,0.1304,2.511497104962667,GN,feddyn noniid unbalanced,cnn tuned
+25,0.1507666666666667,8.93252543926239,BN,feddyn iid balanced,cnn tuned
+25,0.09986666666666666,3.149790977636973,BN,feddyn noniid balanced,cnn tuned
+25,0.09973333333333334,2.6241839416821797,BN,feddyn noniid unbalanced,cnn tuned
+25,0.4354,1.5675296318531036,GN,feddyn iid balanced,cnn tuned
+25,0.1374,2.429462557633718,GN,feddyn noniid balanced,cnn tuned
+25,0.10306666666666668,2.6044143390655514,GN,feddyn noniid unbalanced,cnn tuned
+26,0.1613,7.783143243789673,BN,feddyn iid balanced,cnn tuned
+26,0.1008,2.520374578634898,BN,feddyn noniid balanced,cnn tuned
+26,0.09953333333333335,2.5612392703692115,BN,feddyn noniid unbalanced,cnn tuned
+26,0.4368,1.555481925010681,GN,feddyn iid balanced,cnn tuned
+26,0.15416666666666667,2.283237585226695,GN,feddyn noniid balanced,cnn tuned
+26,0.12593333333333334,2.5941579778989152,GN,feddyn noniid unbalanced,cnn tuned
+27,0.1555,6.849410367012024,BN,feddyn iid balanced,cnn tuned
+27,0.11643333333333333,2.767654392719269,BN,feddyn noniid balanced,cnn tuned
+27,0.10000000000000002,2.8795745833714803,BN,feddyn noniid unbalanced,cnn tuned
+27,0.4512333333333333,1.5119576235612235,GN,feddyn iid balanced,cnn tuned
+27,0.147,2.419126640955607,GN,feddyn noniid balanced,cnn tuned
+27,0.10000000000000002,3.5047923795382183,GN,feddyn noniid unbalanced,cnn tuned
+28,0.16126666666666667,6.086614179611206,BN,feddyn iid balanced,cnn tuned
+28,0.09926666666666666,2.6553234211603804,BN,feddyn noniid balanced,cnn tuned
+28,0.10973333333333335,2.7488717158635456,BN,feddyn noniid unbalanced,cnn tuned
+28,0.45249999999999996,1.5106683158874512,GN,feddyn iid balanced,cnn tuned
+28,0.16016666666666665,2.3198731867472335,GN,feddyn noniid balanced,cnn tuned
+28,0.10506666666666668,2.789605756600698,GN,feddyn noniid unbalanced,cnn tuned
+29,0.13433333333333333,9.860505685806274,BN,feddyn iid balanced,cnn tuned
+29,0.10256666666666665,2.861655121644338,BN,feddyn noniid balanced,cnn tuned
+29,0.10063333333333334,3.031674300432205,BN,feddyn noniid unbalanced,cnn tuned
+29,0.4560333333333333,1.5016554657618206,GN,feddyn iid balanced,cnn tuned
+29,0.14983333333333335,2.4889266419410707,GN,feddyn noniid balanced,cnn tuned
+29,0.10633333333333334,3.3271735533078513,GN,feddyn noniid unbalanced,cnn tuned
+30,0.1734,9.074586353302001,BN,feddyn iid balanced,cnn tuned
+30,0.10576666666666668,2.829985172748566,BN,feddyn noniid balanced,cnn tuned
+30,0.09806666666666668,2.6190584643681842,BN,feddyn noniid unbalanced,cnn tuned
+30,0.45883333333333337,1.498838854233424,GN,feddyn iid balanced,cnn tuned
+30,0.16166666666666665,2.327649619579315,GN,feddyn noniid balanced,cnn tuned
+30,0.12756666666666666,2.586684474945068,GN,feddyn noniid unbalanced,cnn tuned
+31,0.11616666666666668,16.3630242729187,BN,feddyn iid balanced,cnn tuned
+31,0.10010000000000001,2.7305644480387365,BN,feddyn noniid balanced,cnn tuned
+31,0.09993333333333333,3.138412481943766,BN,feddyn noniid unbalanced,cnn tuned
+31,0.46943333333333337,1.4771599332491556,GN,feddyn iid balanced,cnn tuned
+31,0.16226666666666667,2.2731674003601072,GN,feddyn noniid balanced,cnn tuned
+31,0.1002,3.537443311214447,GN,feddyn noniid unbalanced,cnn tuned
+32,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+32,0.1009,2.7370939874649047,BN,feddyn noniid balanced,cnn tuned
+32,0.10463333333333334,2.628721063931783,BN,feddyn noniid unbalanced,cnn tuned
+32,0.47576666666666667,1.4523844901720684,GN,feddyn iid balanced,cnn tuned
+32,0.1701,2.402940403620402,GN,feddyn noniid balanced,cnn tuned
+32,0.14426666666666665,2.41087917248408,GN,feddyn noniid unbalanced,cnn tuned
+33,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+33,0.11723333333333334,2.655958019097646,BN,feddyn noniid balanced,cnn tuned
+33,0.10113333333333334,2.6094606431325276,BN,feddyn noniid unbalanced,cnn tuned
+33,0.47836666666666666,1.4380655296643576,GN,feddyn iid balanced,cnn tuned
+33,0.17076666666666665,2.293507423798243,GN,feddyn noniid balanced,cnn tuned
+33,0.1047,2.773909565607706,GN,feddyn noniid unbalanced,cnn tuned
+34,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+34,0.10003333333333335,3.1902290646235145,BN,feddyn noniid balanced,cnn tuned
+34,0.0998,2.802494337558746,BN,feddyn noniid unbalanced,cnn tuned
+34,0.4840333333333333,1.4364864222208658,GN,feddyn iid balanced,cnn tuned
+34,0.15173333333333333,2.4567868550618486,GN,feddyn noniid balanced,cnn tuned
+34,0.11176666666666668,2.8685377963383996,GN,feddyn noniid unbalanced,cnn tuned
+35,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+35,0.09983333333333333,2.9870912067095436,BN,feddyn noniid balanced,cnn tuned
+35,0.10000000000000002,2.860619111061096,BN,feddyn noniid unbalanced,cnn tuned
+35,0.4868333333333334,1.4173663536707561,GN,feddyn iid balanced,cnn tuned
+35,0.16076666666666667,2.3443959752718606,GN,feddyn noniid balanced,cnn tuned
+35,0.12046666666666665,3.0182134358088177,GN,feddyn noniid unbalanced,cnn tuned
+36,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+36,0.11776666666666667,3.110345720450083,BN,feddyn noniid balanced,cnn tuned
+36,0.10406666666666668,2.91733366171519,BN,feddyn noniid unbalanced,cnn tuned
+36,0.48796666666666666,1.425408922433853,GN,feddyn iid balanced,cnn tuned
+36,0.16193333333333335,2.3951416595776878,GN,feddyn noniid balanced,cnn tuned
+36,0.1269,3.065307178497314,GN,feddyn noniid unbalanced,cnn tuned
+37,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+37,0.11253333333333333,2.6866320649782818,BN,feddyn noniid balanced,cnn tuned
+37,0.10010000000000001,2.7777791746457416,BN,feddyn noniid unbalanced,cnn tuned
+37,0.4947,1.392477455933889,GN,feddyn iid balanced,cnn tuned
+37,0.1604,2.275559319257736,GN,feddyn noniid balanced,cnn tuned
+37,0.12963333333333335,2.634731733004252,GN,feddyn noniid unbalanced,cnn tuned
+38,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+38,0.11583333333333333,2.8675514960289004,BN,feddyn noniid balanced,cnn tuned
+38,0.10000000000000002,3.062941559155782,BN,feddyn noniid unbalanced,cnn tuned
+38,0.5002666666666666,1.389898397922516,GN,feddyn iid balanced,cnn tuned
+38,0.15863333333333332,2.34294405857722,GN,feddyn noniid balanced,cnn tuned
+38,0.14913333333333334,2.551968568960826,GN,feddyn noniid unbalanced,cnn tuned
+39,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+39,0.1029,2.8948700459798182,BN,feddyn noniid balanced,cnn tuned
+39,0.10149999999999999,2.71323459148407,BN,feddyn noniid unbalanced,cnn tuned
+39,0.5004666666666667,1.385299608707428,GN,feddyn iid balanced,cnn tuned
+39,0.1792,2.230764121611913,GN,feddyn noniid balanced,cnn tuned
+39,0.13556666666666667,3.064895950158437,GN,feddyn noniid unbalanced,cnn tuned
+40,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+40,0.12006666666666667,3.0776894060770665,BN,feddyn noniid balanced,cnn tuned
+40,0.10000000000000002,3.0257941253980003,BN,feddyn noniid unbalanced,cnn tuned
+40,0.5094666666666666,1.3651642525196077,GN,feddyn iid balanced,cnn tuned
+40,0.17516666666666666,2.4685774083932244,GN,feddyn noniid balanced,cnn tuned
+40,0.13783333333333334,3.316218479474385,GN,feddyn noniid unbalanced,cnn tuned
+41,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+41,0.10543333333333334,3.2772966845830283,BN,feddyn noniid balanced,cnn tuned
+41,0.10273333333333334,2.8522864969571433,BN,feddyn noniid unbalanced,cnn tuned
+41,0.5155,1.3464497915903728,GN,feddyn iid balanced,cnn tuned
+41,0.17689999999999997,2.4183716054757434,GN,feddyn noniid balanced,cnn tuned
+41,0.12403333333333333,2.6338146789868673,GN,feddyn noniid unbalanced,cnn tuned
+42,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+42,0.1035,3.0229304091135663,BN,feddyn noniid balanced,cnn tuned
+42,0.10076666666666667,2.7498131497701013,BN,feddyn noniid unbalanced,cnn tuned
+42,0.5169333333333332,1.3435633166631062,GN,feddyn iid balanced,cnn tuned
+42,0.17723333333333335,2.3337884795665738,GN,feddyn noniid balanced,cnn tuned
+42,0.12596666666666667,2.900756537914276,GN,feddyn noniid unbalanced,cnn tuned
+43,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+43,0.10446666666666667,3.453526514371236,BN,feddyn noniid balanced,cnn tuned
+43,0.09996666666666666,2.8153948704401652,BN,feddyn noniid unbalanced,cnn tuned
+43,0.5193333333333334,1.3418373703956605,GN,feddyn iid balanced,cnn tuned
+43,0.16343333333333332,2.4857206972440085,GN,feddyn noniid balanced,cnn tuned
+43,0.1255666666666667,2.59481162071228,GN,feddyn noniid unbalanced,cnn tuned
+44,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+44,0.1252,3.215501456260681,BN,feddyn noniid balanced,cnn tuned
+44,0.10006666666666668,2.960075817902883,BN,feddyn noniid unbalanced,cnn tuned
+44,0.5257333333333333,1.329991303284963,GN,feddyn iid balanced,cnn tuned
+44,0.16956666666666667,2.430534970760346,GN,feddyn noniid balanced,cnn tuned
+44,0.1355,2.9439701286951703,GN,feddyn noniid unbalanced,cnn tuned
+45,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+45,0.1257,3.216701505978902,BN,feddyn noniid balanced,cnn tuned
+45,0.10060000000000001,2.8215552234649657,BN,feddyn noniid unbalanced,cnn tuned
+45,0.5304333333333333,1.3180628859996795,GN,feddyn iid balanced,cnn tuned
+45,0.18223333333333333,2.4017550269762675,GN,feddyn noniid balanced,cnn tuned
+45,0.12293333333333334,2.823968880971273,GN,feddyn noniid unbalanced,cnn tuned
+46,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+46,0.13073333333333334,2.885933177471161,BN,feddyn noniid balanced,cnn tuned
+46,0.10133333333333333,2.819166529973348,BN,feddyn noniid unbalanced,cnn tuned
+46,0.5310666666666667,1.305434062083562,GN,feddyn iid balanced,cnn tuned
+46,0.17506666666666668,2.299380226532618,GN,feddyn noniid balanced,cnn tuned
+46,0.12443333333333333,2.773371013005575,GN,feddyn noniid unbalanced,cnn tuned
+47,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+47,0.1381,3.0699848031997683,BN,feddyn noniid balanced,cnn tuned
+47,0.10006666666666668,2.7276125796635946,BN,feddyn noniid unbalanced,cnn tuned
+47,0.5354333333333333,1.2981137192249297,GN,feddyn iid balanced,cnn tuned
+47,0.16483333333333333,2.2477893133958182,GN,feddyn noniid balanced,cnn tuned
+47,0.14726666666666666,2.5150841736793517,GN,feddyn noniid unbalanced,cnn tuned
+48,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+48,0.10946666666666667,2.8430274812380474,BN,feddyn noniid balanced,cnn tuned
+48,0.10010000000000001,2.781019460360209,BN,feddyn noniid unbalanced,cnn tuned
+48,0.5344666666666668,1.3002891137202583,GN,feddyn iid balanced,cnn tuned
+48,0.1874,2.1619114649295805,GN,feddyn noniid balanced,cnn tuned
+48,0.14886666666666667,2.550038001537323,GN,feddyn noniid unbalanced,cnn tuned
+49,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+49,0.10056666666666665,3.4827789918581646,BN,feddyn noniid balanced,cnn tuned
+49,0.10733333333333334,2.7445549416542057,BN,feddyn noniid unbalanced,cnn tuned
+49,0.5341333333333332,1.301452103058497,GN,feddyn iid balanced,cnn tuned
+49,0.1738666666666667,2.2662987999121347,GN,feddyn noniid balanced,cnn tuned
+49,0.17126666666666668,2.502230954170227,GN,feddyn noniid unbalanced,cnn tuned
+50,0.10000000000000002,,BN,feddyn iid balanced,cnn tuned
+50,0.10010000000000001,3.311916012763977,BN,feddyn noniid balanced,cnn tuned
+50,0.09663333333333335,2.5779906574885048,BN,feddyn noniid unbalanced,cnn tuned
+50,0.5357,1.2999288982152937,GN,feddyn iid balanced,cnn tuned
+50,0.1786,2.2774050863583883,GN,feddyn noniid balanced,cnn tuned
+50,0.14896666666666666,2.7587095268567405,GN,feddyn noniid unbalanced,cnn tuned
